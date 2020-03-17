@@ -6,6 +6,7 @@ import (
 	"opms/controllers/roles"
 	"opms/controllers/logs"
 	"opms/controllers/dbconfig"
+	"opms/controllers/demo"
 
 	"github.com/astaxie/beego"
 )
@@ -67,4 +68,7 @@ func init() {
 	beego.Router("/dbconfig/edit/:id", &dbconfig.EditDBConfigController{})
 	beego.Router("/dbconfig/ajax/status", &dbconfig.AjaxStatusDBConfigController{})
 	beego.Router("/dbconfig/ajax/delete", &dbconfig.AjaxDeleteDBConfigController{})
+
+	//UI demo
+	beego.Router("/demo/index", &demo.demoController{})
 }

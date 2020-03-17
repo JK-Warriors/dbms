@@ -46,6 +46,7 @@
       </li>
     {{end}}
   {{end}}
+  	<li><a href="/demo/index"><i class="fa fa-home"></i> <span>UI Demo</span></a></li> 
   </ul>
 	 
     <!--sidebar nav end-->
