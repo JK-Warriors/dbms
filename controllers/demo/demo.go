@@ -1,26 +1,27 @@
 package demo
 
 import (
-	"fmt"
-	"opms/controllers"
-	. "opms/models/demo"
+	//"fmt"
 	//"opms/utils"
 	//"strconv"
-	"strings"
+	//"strings"
 	//"time"
-
-	"github.com/astaxie/beego"
-	"github.com/astaxie/beego/utils/pagination"
+	"opms/controllers"
 )
 
 //消息管理
-type demoController struct {
-	
+
+type DemoController struct {
 	controllers.BaseController
 }
 
-func (this *BaseController) Prepare() {
+func (this *DemoController) Get() {
+	//权限检测
+	// if !strings.Contains(this.GetSession("userPermission").(string), "dbconfig-manage") {
+	// 	this.Abort("401")
+	// }
 
+	this.TplName = "demo/index.tpl"
 }
 
 

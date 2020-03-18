@@ -70,5 +70,5 @@ func init() {
 	beego.Router("/dbconfig/ajax/delete", &dbconfig.AjaxDeleteDBConfigController{})
 
 	//UI demo
-	beego.Router("/demo/index", &demo.demoController{})
+	beego.Router("/demo/index", &demo.DemoController{})
 }
