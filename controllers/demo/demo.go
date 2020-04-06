@@ -24,4 +24,38 @@ func (this *DemoController) Get() {
 	this.TplName = "demo/index.tpl"
 }
 
+type FormController struct {
+	controllers.BaseController
+}
+func (this *FormController) Get() {
+	//权限检测
+	// if !strings.Contains(this.GetSession("userPermission").(string), "dbconfig-manage") {
+	// 	this.Abort("401")
+	// }
 
+	this.TplName = "demo/form.tpl"
+}
+
+type BaseController struct {
+	controllers.BaseController
+}
+func (this *BaseController) Get() {
+	//权限检测
+	// if !strings.Contains(this.GetSession("userPermission").(string), "dbconfig-manage") {
+	// 	this.Abort("401")
+	// }
+
+	this.TplName = "demo/base.tpl"
+}
+
+type BaseController struct {
+	controllers.BaseController
+}
+func (this *BaseController) Get() {
+	//权限检测
+	// if !strings.Contains(this.GetSession("userPermission").(string), "dbconfig-manage") {
+	// 	this.Abort("401")
+	// }
+
+	this.TplName = "demo/base.tpl"
+}

@@ -71,4 +71,6 @@ func init() {
 
 	//UI demo
 	beego.Router("/demo/index", &demo.DemoController{})
+	beego.Router("/demo/form", &demo.FormController{})
+	beego.Router("/demo/base", &demo.BaseController{})
 }
