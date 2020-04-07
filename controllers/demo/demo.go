@@ -48,14 +48,14 @@ func (this *BaseController) Get() {
 	this.TplName = "demo/base.tpl"
 }
 
-type BaseController struct {
-	controllers.BaseController
-}
-func (this *BaseController) Get() {
-	//权限检测
-	// if !strings.Contains(this.GetSession("userPermission").(string), "dbconfig-manage") {
-	// 	this.Abort("401")
-	// }
+// type BaseController struct {
+// 	controllers.BaseController
+// }
+// func (this *BaseController) Get() {
+// 	//权限检测
+// 	// if !strings.Contains(this.GetSession("userPermission").(string), "dbconfig-manage") {
+// 	// 	this.Abort("401")
+// 	// }
 
-	this.TplName = "demo/base.tpl"
-}
+// 	this.TplName = "demo/base.tpl"
+// }

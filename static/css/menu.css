@@ -237,6 +237,12 @@
   color: #333;
 }
 
+.navbarstyle .nav > li > a.active:hover {
+  background: #dfe5ff;
+  border-left: 4px solid #4d4efd;
+  color: #333;
+}
+
 .navbarstyle .nav > li > a:hover {
   background: none;
   color: #333;

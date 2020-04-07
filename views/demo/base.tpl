@@ -14,6 +14,11 @@
         <div class="header-section">
           <!--toggle button start-->
           <a class="toggle-btn"><i class="fa fa-bars"></i></a>
+          <div class="header-menu">
+            <li class="active"><a href="#">首页</a></li>
+            <li><a href="#">配置</a></li>
+            <li><a href="#">系统管理</a></li>
+          </div>
           <!--toggle button end-->
           <!--search start-->
           <!--search end-->

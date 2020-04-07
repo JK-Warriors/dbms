@@ -209,6 +209,13 @@ $menu-border: #4d4efd;
       background: $menu-bg;
       border-left: 4px solid $menu-border;
       color: #333;
+     
+    } 
+    &.active:hover {
+      background: $menu-bg;
+      border-left: 4px solid $menu-border;
+      color: #333;
+     
     }
     &:hover {
       background: none;
