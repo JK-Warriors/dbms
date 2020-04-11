@@ -4,8 +4,9 @@ import (
 	//"opms/initial"
 
 	"fmt"
-	. "opms/models/roles"
 	. "opms/models/messages"
+	. "opms/models/roles"
+
 	//"opms/utils"
 	"strconv"
 	"strings"
@@ -17,9 +18,9 @@ type BaseController struct {
 	beego.Controller
 	IsLogin bool
 	//UserInfo string
-	UserId   int64
-	Username string
-	UserAvatar   string
+	UserId     int64
+	Username   string
+	UserAvatar string
 }
 
 func (this *BaseController) Prepare() {
@@ -54,11 +55,31 @@ func (this *BaseController) Prepare() {
 
 		//fmt.Println(this.GetSession("userGroupid").(string))
 		//左侧导航
-		//_, _, leftNav := ListGroupsUserPermission(this.GetSession("userRoleid").(string))
-		_, _, leftNav := ListRoleUserPermission(this.GetSession("userRoleid").(string))
+		url := this.Ctx.Request.RequestURI
+		url_first_part := ""
+		//utils.LogDebug(string(url[1:]))
+		if strings.Index(url, "/") >= 0 {
+			if strings.Index(url, "?") >= 0 {
+				pos := strings.Index(url, "?")
+				url = url[0:pos]
+				//utils.LogDebug(url)
+			}
+
+			sec_pos := strings.Index(url[1:], "/")
+			if sec_pos >= 0 {
+				url_first_part = url[0 : sec_pos+1]
+				//utils.LogDebug(first_part)
+			}
+		}
+		//点首页的时候，只有一个 / 或者为空时
+		if url_first_part == "/" || url_first_part == "" {
+			url_first_part = "---"
+		}
+
+		//_, _, leftNav := ListRoleUserPermission(this.GetSession("userRoleid").(string))
+		_, _, leftNav := GetLeftNav(this.GetSession("userRoleid").(string), url_first_part)
 		this.Data["leftNav"] = leftNav
-		
+
 	}
 	this.Data["IsLogin"] = this.IsLogin
 }
-

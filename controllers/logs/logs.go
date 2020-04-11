@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"opms/controllers"
 	. "opms/models/logs"
+
 	//"opms/utils"
 	//"strconv"
 	"strings"
@@ -23,6 +24,7 @@ func (this *ManageLogController) Get() {
 	if !strings.Contains(this.GetSession("userPermission").(string), "log-manage") {
 		this.Abort("401")
 	}
+
 	page, err := this.GetInt("p")
 	if err != nil {
 		page = 1
@@ -55,7 +57,6 @@ func (this *ManageLogController) Get() {
 
 	this.TplName = "logs/index.tpl"
 }
-
 
 type AjaxDeleteLogController struct {
 	controllers.BaseController

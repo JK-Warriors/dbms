@@ -62,40 +62,43 @@ CREATE TABLE `pms_permissions` (
 -- Records of pms_permissions
 -- ----------------------------
 INSERT INTO `pms_permissions` VALUES ('0', '0', '根节点', 'root', '/root', 'fa-root', '0', '0', '0');
-INSERT INTO `pms_permissions` VALUES ('1', '0', '业务配置', 'config', '/config', 'fa-config', '1', '1', '1');
-INSERT INTO `pms_permissions` VALUES ('2', '0', '权限管理', 'auth', '/auth', '', '1', '1', '2');
-INSERT INTO `pms_permissions` VALUES ('3', '0', '系统管理', 'system', '/system', '', '1', '1', '3');
+INSERT INTO `pms_permissions` VALUES ('1', '0', '系统管理', 'system', '/system', '', '1', '0', '1');
+INSERT INTO `pms_permissions` VALUES ('2', '0', '业务配置', 'config', '/config', 'fa-config', '1', '0', '2');
 
-INSERT INTO `pms_permissions` VALUES ('1010', '2', '用户管理', 'user-manage', '/user/manage', 'fa-user', '1', '1', '0');
-INSERT INTO `pms_permissions` VALUES ('1011', '2', '添加用户', 'user-add', '/user/add', null, '0', '0', '0');
-INSERT INTO `pms_permissions` VALUES ('1012', '2', '编辑用户', 'user-edit', '/user/edit', null, '0', '0', '0');
-INSERT INTO `pms_permissions` VALUES ('1013', '2', '删除用户', 'user-delete', '/user/delete', '', '0', '0', '0');
-INSERT INTO `pms_permissions` VALUES ('1020', '2', '角色管理', 'role-manage', '/role/manage', 'fa-user', '1', '1', '1');
-INSERT INTO `pms_permissions` VALUES ('1021', '2', '添加角色', 'role-add', '/role/add', '', '0', '0', '0');
-INSERT INTO `pms_permissions` VALUES ('1022', '2', '编辑角色', 'role-edit', '/role/edit', '', '0', '0', '0');
-INSERT INTO `pms_permissions` VALUES ('1023', '2', '删除角色', 'role-delete', '/role/delete', '', '0', '0', '0');
-INSERT INTO `pms_permissions` VALUES ('1024', '2', '角色权限', 'role-permission', '/role/permission', '', '0', '0', '0');
--- INSERT INTO `pms_permissions` VALUES ('1025', '2', '角色成员', 'role-user', '/role/user', '', '0', '0', '0');
--- INSERT INTO `pms_permissions` VALUES ('1026', '2', '添加角色', 'role-user-add', '/role/useradd', '', '0', '0', '0');
--- INSERT INTO `pms_permissions` VALUES ('1027', '2', '删除角色', 'role-user-delete', '/role/userdelete', '', '0', '0', '0');
-INSERT INTO `pms_permissions` VALUES ('1030', '2', '权限管理', 'permission-manage', '/permission/manage', 'fa-user', '1', '1', '2');
-INSERT INTO `pms_permissions` VALUES ('1031', '2', '添加权限', 'permission-add', '/permission/add', '', '0', '0', '0');
-INSERT INTO `pms_permissions` VALUES ('1032', '2', '编辑权限', 'permission-edit', '/permission/edit', '', '0', '0', '0');
-INSERT INTO `pms_permissions` VALUES ('1033', '2', '删除权限', 'permission-delete', '/permission/delete', '', '0', '0', '0');
+INSERT INTO `pms_permissions` VALUES ('1010', '1', '用户管理', 'user-manage', '/user/manage', 'fa-user', '1', '1', '0');
+INSERT INTO `pms_permissions` VALUES ('1011', '1', '添加用户', 'user-add', '/user/add', null, '0', '0', '0');
+INSERT INTO `pms_permissions` VALUES ('1012', '1', '编辑用户', 'user-edit', '/user/edit', null, '0', '0', '0');
+INSERT INTO `pms_permissions` VALUES ('1013', '1', '删除用户', 'user-delete', '/user/delete', '', '0', '0', '0');
+INSERT INTO `pms_permissions` VALUES ('1020', '1', '角色管理', 'role-manage', '/role/manage', 'fa-user', '1', '1', '1');
+INSERT INTO `pms_permissions` VALUES ('1021', '1', '添加角色', 'role-add', '/role/add', '', '0', '0', '0');
+INSERT INTO `pms_permissions` VALUES ('1022', '1', '编辑角色', 'role-edit', '/role/edit', '', '0', '0', '0');
+INSERT INTO `pms_permissions` VALUES ('1023', '1', '删除角色', 'role-delete', '/role/delete', '', '0', '0', '0');
+INSERT INTO `pms_permissions` VALUES ('1024', '1', '角色权限', 'role-permission', '/role/permission', '', '0', '0', '0');
+-- INSERT INTO `pms_permissions` VALUES ('1025', '1', '角色成员', 'role-user', '/role/user', '', '0', '0', '0');
+-- INSERT INTO `pms_permissions` VALUES ('1026', '1', '添加角色', 'role-user-add', '/role/useradd', '', '0', '0', '0');
+-- INSERT INTO `pms_permissions` VALUES ('1027', '1', '删除角色', 'role-user-delete', '/role/userdelete', '', '0', '0', '0');
+INSERT INTO `pms_permissions` VALUES ('1030', '1', '权限管理', 'permission-manage', '/permission/manage', 'fa-user', '1', '1', '2');
+INSERT INTO `pms_permissions` VALUES ('1031', '1', '添加权限', 'permission-add', '/permission/add', '', '0', '0', '0');
+INSERT INTO `pms_permissions` VALUES ('1032', '1', '编辑权限', 'permission-edit', '/permission/edit', '', '0', '0', '0');
+INSERT INTO `pms_permissions` VALUES ('1033', '1', '删除权限', 'permission-delete', '/permission/delete', '', '0', '0', '0');
+
+INSERT INTO `pms_permissions` VALUES ('1040', '1', '日志管理', 'log-manage', '/log/manage', 'fa-user', '1', '1', '1');
+INSERT INTO `pms_permissions` VALUES ('1041', '1', '日志删除', 'log-delete', '/log/delete', 'fa-user', '0', '0', '0');
+
+INSERT INTO `pms_permissions` VALUES ('1050', '1', '消息管理', 'message-manage', '/message/manage', 'fa-user', '0', '0', '0');
+INSERT INTO `pms_permissions` VALUES ('1051', '1', '消息删除', 'message-delete', '/message/delete', 'fa-user', '0', '0', '0');
 
 
-INSERT INTO `pms_permissions` VALUES ('1040', '1', '数据库配置', 'dbconfig-manage', '/dbconfig/manage', 'fa-user', '1', '1', '1');
-INSERT INTO `pms_permissions` VALUES ('1041', '1', '添加数据库', 'dbconfig-add', '/dbconfig/add', '', '0', '0', '0');
-INSERT INTO `pms_permissions` VALUES ('1042', '1', '编辑数据库', 'dbconfig-edit', '/dbconfig/edit', '', '0', '0', '0');
-INSERT INTO `pms_permissions` VALUES ('1043', '1', '删除数据库', 'dbconfig-delete', '/dbconfig/delete', '', '0', '0', '0');
+INSERT INTO `pms_permissions` VALUES ('1100', '2', '业务系统配置', 'business-manage', '/business/manage', 'fa-user', '1', '1', '1');
+INSERT INTO `pms_permissions` VALUES ('1101', '2', '添加业务系统', 'business-add', '/business/add', '', '0', '0', '0');
+INSERT INTO `pms_permissions` VALUES ('1102', '2', '编辑业务系统', 'business-edit', '/business/edit', '', '0', '0', '0');
+INSERT INTO `pms_permissions` VALUES ('1103', '2', '删除业务系统', 'business-delete', '/business/delete', '', '0', '0', '0');
 
-INSERT INTO `pms_permissions` VALUES ('1050', '3', '日志管理', 'log-manage', '/log/manage', 'fa-user', '1', '1', '1');
-INSERT INTO `pms_permissions` VALUES ('1051', '3', '日志删除', 'log-delete', '/log/delete', 'fa-user', '0', '0', '0');
 
-INSERT INTO `pms_permissions` VALUES ('1060', '3', '消息管理', 'message-manage', '/message/manage', 'fa-user', '0', '0', '0');
-INSERT INTO `pms_permissions` VALUES ('1061', '3', '消息删除', 'message-delete', '/message/delete', 'fa-user', '0', '0', '0');
-
-INSERT INTO `pms_permissions` VALUES ('1070', '1', '数据库查看', 'dbmonitor-manage', '/dbmonitor/manage', 'fa-user', '1', '1', '2');
+INSERT INTO `pms_permissions` VALUES ('1110', '2', '数据库配置', 'dbconfig-manage', '/dbconfig/manage', 'fa-user', '1', '1', '2');
+INSERT INTO `pms_permissions` VALUES ('1111', '2', '添加数据库', 'dbconfig-add', '/dbconfig/add', '', '0', '0', '0');
+INSERT INTO `pms_permissions` VALUES ('1112', '2', '编辑数据库', 'dbconfig-edit', '/dbconfig/edit', '', '0', '0', '0');
+INSERT INTO `pms_permissions` VALUES ('1113', '2', '删除数据库', 'dbconfig-delete', '/dbconfig/delete', '', '0', '0', '0');
 
 
 -- ----------------------------
@@ -135,13 +138,17 @@ INSERT INTO `pms_role_permission` VALUES ('19', '1', '1032');
 INSERT INTO `pms_role_permission` VALUES ('20', '1', '1033');
 INSERT INTO `pms_role_permission` VALUES ('21', '1', '1040');
 INSERT INTO `pms_role_permission` VALUES ('22', '1', '1041');
-INSERT INTO `pms_role_permission` VALUES ('23', '1', '1042');
-INSERT INTO `pms_role_permission` VALUES ('24', '1', '1043');
-INSERT INTO `pms_role_permission` VALUES ('25', '1', '1050');
-INSERT INTO `pms_role_permission` VALUES ('26', '1', '1051');
-INSERT INTO `pms_role_permission` VALUES ('27', '1', '1060');
-INSERT INTO `pms_role_permission` VALUES ('28', '1', '1061');
-INSERT INTO `pms_role_permission` VALUES ('29', '1', '1070');
+INSERT INTO `pms_role_permission` VALUES ('23', '1', '1050');
+INSERT INTO `pms_role_permission` VALUES ('24', '1', '1051');
+
+INSERT INTO `pms_role_permission` VALUES ('25', '1', '1100');
+INSERT INTO `pms_role_permission` VALUES ('26', '1', '1101');
+INSERT INTO `pms_role_permission` VALUES ('27', '1', '1102');
+INSERT INTO `pms_role_permission` VALUES ('28', '1', '1103');
+INSERT INTO `pms_role_permission` VALUES ('29', '1', '1110');
+INSERT INTO `pms_role_permission` VALUES ('30', '1', '1111');
+INSERT INTO `pms_role_permission` VALUES ('31', '1', '1112');
+INSERT INTO `pms_role_permission` VALUES ('32', '1', '1113');
 
 
 
@@ -283,6 +290,21 @@ CREATE TABLE `pms_db_config` (
   KEY `host` (`host`),
   KEY `alias` (`alias`)
 )ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8 COMMENT='数据库配置表';
+
+
+-- -----------------------------------------------------------------------------
+-- Table structure for pms_business
+-- -----------------------------------------------------------------------------
+DROP TABLE IF EXISTS `pms_business`;
+CREATE TABLE `pms_business` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `bs_name` varchar(50) DEFAULT '' COMMENT '业务系统名',
+  `is_delete` tinyint(2) DEFAULT 0 COMMENT '1: 删除；0：未删除',
+  `created` int(10) DEFAULT NULL COMMENT '创建时间',
+  `updated` int(10) DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  KEY `bs_name` (`bs_name`)
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='业务系统配置表';
 
 
 -- -----------------------------------------------------------------------------

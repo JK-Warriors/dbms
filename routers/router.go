@@ -1,19 +1,19 @@
 package routers
 
 import (
-	"opms/controllers/messages"
-	"opms/controllers/users"
-	"opms/controllers/roles"
-	"opms/controllers/logs"
+	"opms/controllers/business"
 	"opms/controllers/dbconfig"
 	"opms/controllers/demo"
+	"opms/controllers/logs"
+	"opms/controllers/messages"
+	"opms/controllers/roles"
+	"opms/controllers/users"
 
 	"github.com/astaxie/beego"
 )
 
 func init() {
 	beego.Router("/", &users.MainController{})
-
 
 	//用户
 	beego.Router("/login", &users.LoginUserController{})
@@ -32,7 +32,6 @@ func init() {
 
 	beego.Router("/my/manage", &users.ShowUserController{})
 
-
 	//消息
 	beego.Router("/message/manage", &messages.ManageMessageController{})
 	beego.Router("/message/ajax/delete", &messages.AjaxDeleteMessageController{})
@@ -47,11 +46,11 @@ func init() {
 	beego.Router("/role/user/:id", &roles.ManageRoleUserController{})
 	beego.Router("/role/user/add/:id", &roles.FormRoleUserController{})
 	beego.Router("/role/user/ajax/delete", &roles.AjaxDeleteRoleUserController{})
-	
+
 	//角色权限
 	beego.Router("/role/permission/:id", &roles.ManageRolePermissionController{})
 	beego.Router("/role/permission/ajax/delete", &roles.AjaxDeleteRolePermissionController{})
-	
+
 	//权限
 	beego.Router("/permission/manage", &roles.ManagePermissionController{})
 	beego.Router("/permission/ajax/delete", &roles.AjaxDeletePermissionController{})
@@ -61,6 +60,12 @@ func init() {
 	//日志
 	beego.Router("/log/manage", &logs.ManageLogController{})
 	beego.Router("/log/ajax/delete", &logs.AjaxDeleteLogController{})
+
+	//业务系统配置
+	beego.Router("/business/manage", &business.ManageBusinessController{})
+	beego.Router("/business/add", &business.AddBusinessController{})
+	beego.Router("/business/edit", &business.EditBusinessController{})
+	beego.Router("/business/ajax/delete", &business.AjaxDeleteBusinessController{})
 
 	//数据库配置
 	beego.Router("/dbconfig/manage", &dbconfig.ManageDBConfigController{})

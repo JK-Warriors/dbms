@@ -24,13 +24,22 @@
  <div class="navbar-default sidebar navbarstyle" role="navigation">
   <div class="logo"> <a href="/"><img src="/static/img/logo-left.png" alt="DRM管理系统">DRM管理系统</a>  </div>
   <div class="logo-icon text-center"> <a href="/"><img src="/static/img/logo_icon.png" style="width:40px;" alt="DRM">DRM</a> </div>
+  
+  <!--<ul class="nav nav-pills nav-stacked custom-nav js-left-nav">-->
   <div class="sidebar-nav navbar-collapse">
-      <ul class="nav" id="side-menu">
+  <ul class="nav" id="side-menu1">
+      {{range $index, $elem := .leftNav}}
+        {{if eq 1 $elem.IsShow}}
         <li>
-          <a href="#"  class="active">
-            <i class="iconfont icon-home"></i> <b>首页</b>
-          </a>
+              <a href="{{$elem.Url}}" data-icon="{{$elem.Icon}}" data-title="{{$elem.Name}}"  class="pointer" data-id="{{$elem.Id}}">
+                <i class="fa {{$elem.Icon}}"></i> <span>{{$elem.Name}}</span>
+              </a>
         </li>
+        {{end}}
+      {{end}}
+  </ul>
+
+  <ul class="nav" id="side-menu">
         <li>
           <a href="#">
             <i class="iconfont icon-UI_icon_zonghe"></i> <b>UI demo</b> <span class="fa arrow"></span>
@@ -59,39 +68,11 @@
         </li>
       </ul>
   </div>
+  <!--sidebar nav end-->
+  
 </div>
 
 
-    <!--<ul class="nav nav-pills nav-stacked custom-nav js-left-nav">-->
-    <ul class="nav nav-pills nav-stacked custom-nav js-left-nav"  lay-filter="nav-side">
-	<!--li><a href="/user/show/{{.LoginUserid}}"><i class="fa fa-home"></i> <span>我的主页</span></a></li-->
-
-
-   
-	<li><a href="/"><i class="fa fa-home"></i> <span>首页</span></a></li> 
-  {{range $index, $elem := .leftNav}}
-    {{if eq 0 $elem.Parentid}}
-      <li class="layui-nav-item">
-          <a class="" href="javascript:;">
-              <i class="fa {{$elem.Icon}}"></i> <span>{{$elem.Name}}</span>
-          </a>
-          <dl class="layui-nav-child pp-nav-childs">
-          {{range $i, $e := $.leftNav}}
-              {{if and (eq $e.Parentid $elem.Id) (eq 1 $e.IsShow)}}
-                <dd>
-                  <a href="{{$e.Url}}" data-icon="{{$e.Icon}}" data-title="{{$e.Name}}"  class="pointer" data-id="{{$e.Id}}">
-                    <i class="fa {{$e.Icon}}"></i><span>{{$e.Name}}</span>
-                  </a>
-                </dd>
-              {{end}}
-          {{end}}
-          </dl>
-      </li>
-    {{end}}
-  {{end}}
-  </ul>
- 
-    <!--sidebar nav end-->
   </div>
 </div>
 <!-- left side end-->
