@@ -3,6 +3,8 @@
  <div class="header-menu">
    <li class="active"><a href="/">首页</a></li>
    <li><a href="/business/manage">配置</a></li>
+   <li><a href="/business/manage">业务系统</a></li>
+   <li><a href="/business/manage">操作</a></li>
    <li><a href="/user/manage">系统管理</a></li>
  </div>
  <!--toggle button end-->

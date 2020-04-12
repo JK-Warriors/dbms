@@ -31,7 +31,7 @@
       {{range $index, $elem := .leftNav}}
         {{if eq 1 $elem.IsShow}}
         <li>
-              <a href="{{$elem.Url}}" data-icon="{{$elem.Icon}}" data-title="{{$elem.Name}}"  class="pointer" data-id="{{$elem.Id}}">
+              <a href="{{$elem.Url}}" data-icon="{{$elem.Icon}}" data-title="{{$elem.Name}}" {{if eq 1 $elem.IsActive}}class="active"{{end}} class="pointer" data-id="{{$elem.Id}}">
                 <i class="fa {{$elem.Icon}}"></i> <span>{{$elem.Name}}</span>
               </a>
         </li>

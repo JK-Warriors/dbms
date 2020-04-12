@@ -5,8 +5,10 @@
 <title>{{config "String" "globaltitle" ""}}</title>
 {{template "inc/meta.tpl" .}}
 <link href="/static/css/table-responsive.css" rel="stylesheet">
-</head><body class="sticky-header">
-<section> {{template "inc/left.tpl" .}}
+</head>
+<body class="sticky-header">
+<section> 
+  {{template "inc/left.tpl" .}}
   <!-- main content start-->
   <div class="main-content" >
     <!-- header section start-->
@@ -14,18 +16,8 @@
       <!--toggle button start-->
       <a class="toggle-btn"><i class="fa fa-bars"></i></a>
       <!--toggle button end-->
-      <!--search start-->
-      <form class="searchform" action="/user/manage" method="get">
-        <input type="text" class="form-control" name="keywords" placeholder="请输入用户名" value="{{.condArr.keywords}}"/>
-        <select name="status" class="form-control">
-          <option value="">用户状态</option>
-          <option value="1" {{if eq "1" .condArr.status}}selected{{end}}>激活</option>
-          <option value="2" {{if eq "2" .condArr.status}}selected{{end}}>禁用</option>
-        </select>
-        <button type="submit" class="btn btn-primary">搜索</button>
-      </form>
-      <!--search end-->
-      {{template "inc/user-info.tpl" .}} </div>
+      {{template "inc/user-info.tpl" .}} 
+    </div>
     <!-- header section end-->
     <!-- page heading start-->
     
@@ -33,17 +25,39 @@
       <!--<h3> 组织管理 {{template "users/nav.tpl" .}}</h3>-->
       <ul class="breadcrumb pull-left">
         <!--<li> <a href="/user/show/{{.LoginUserid}}">OPMS</a> </li>-->
-        <li> <a href="/user/manage">用户权限</a> </li>
         <li> <a href="/user/manage">用户管理</a> </li>
-        <li class="active"> 用户 </li>
+        <li class="active"> 用户列表 </li>
       </ul>
-      <div class="pull-right"><a href="/user/add" class="btn btn-success">+添加用户</a></div>
     </div>
     <!-- page heading end-->
     <!--body wrapper start-->
     <div class="wrapper">
       <div class="row">
         <div class="col-sm-12">
+          <div class="searchdiv">
+            <div class="search-form">
+              <div class="form-inline">
+                <div class="form-group">
+                  <!--search start-->
+                  <form action="/user/manage" method="get">
+                    <input type="text" class="form-control" name="keywords" placeholder="请输入用户名" value="{{.condArr.keywords}}"/>
+                    <select name="status" class="form-control">
+                      <option value="">用户状态</option>
+                      <option value="1" {{if eq "1" .condArr.status}}selected{{end}}>激活</option>
+                      <option value="2" {{if eq "2" .condArr.status}}selected{{end}}>禁用</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i>搜索</button>
+                    <a href="/user/manage" class="btn btn-default" type="submit"> <i class="fa fa-reset"></i> 重置 </a>
+                  </form>
+                  <!--search end-->
+                </div>
+                <div class="pull-right">
+                  <a href="/user/add" class="btn btn-success" id="add_user"><i class="fa fa-plus"></i> 新增用户</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <section class="panel">
             <header class="panel-heading"> 用户列表 / 总数：{{.countUser}}<span class="tools pull-right"><a href="javascript:;" class="fa fa-chevron-down"></a>
               <!--a href="javascript:;" class="fa fa-times"></a-->

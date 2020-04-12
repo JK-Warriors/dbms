@@ -14,21 +14,12 @@
       <!--toggle button start-->
       <a class="toggle-btn"><i class="fa fa-bars"></i></a>
       <!--toggle button end-->
-      <!--search start-->
-      <form class="searchform" action="/log/manage" method="get">
-        <input type="text" class="form-control" name="username" placeholder="请输入用户名" value="{{.condArr.username}}"/>
-        <input type="text" class="form-control" name="ip" placeholder="请输入IP" value="{{.condArr.ip}}"/>
-        <button type="submit" class="btn btn-primary">搜索</button>
-        <!--<a href="/log/manage" class="btn btn-primary">重置</a>-->
-      </form>
-      <!--search end-->
       {{template "inc/user-info.tpl" .}} </div>
     <!-- header section end-->
     <!-- page heading start-->
     <div class="page-heading">
       <!-- <h3> 日志管理 </h3>-->
       <ul class="breadcrumb pull-left">
-        <li> <a href="/log/manage">系统管理</a> </li>
         <li> <a href="/log/manage">日志管理</a> </li>
         <li class="active"> 系统日志 </li>
       </ul>
@@ -38,6 +29,25 @@
     <div class="wrapper">
       <div class="row">
         <div class="col-sm-12">
+          <div class="searchdiv">
+            <div class="search-form">
+              <div class="form-inline">
+                <div class="form-group">
+                  <!--search start-->
+                  <form action="/log/manage" method="get">
+                    <input type="text" class="form-control" name="username" placeholder="请输入用户名" value="{{.condArr.username}}"/>
+                    <input type="text" class="form-control" name="ip" placeholder="请输入IP" value="{{.condArr.ip}}"/>
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i>搜索</button>
+                    <a href="/log/manage" class="btn btn-default" type="submit"> <i class="fa fa-reset"></i> 重置 </a>
+                  </form>
+                  <!--search end-->
+                </div>
+                <div class="pull-right">
+                </div>
+              </div>
+            </div>
+          </div>
+
           <section class="panel mail-box">
             <header class="panel-heading"> 日志列表 / 总数：{{.countLog}}<span class="tools pull-right"><a href="javascript:;" class="fa fa-chevron-down"></a>
               <!--a href="javascript:;" class="fa fa-times"></a-->

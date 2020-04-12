@@ -77,17 +77,30 @@ func ListRoleUserPermission(roleid string) (num int64, err error, ops []Permissi
 	return nums, err, users
 }
 
-func GetLeftNav(roleid string, url string) (num int64, err error, ops []Permissions) {
-	var users []Permissions
+type Urls struct {
+	Id       int64
+	Parentid int64
+	Name     string
+	EName    string
+	Url      string
+	Icon     string
+	Nav      int
+	IsShow   int64
+	Sort     int
+	IsActive int
+}
+
+func GetLeftNav(roleid string, url string) (num int64, err error, ops []Urls) {
+	var urls []Urls
 	var nums int64
-	sql := `select p1.*
+	sql := `select p1.*, instr(url,'` + url + `') as is_active
 			from pms_role_permission AS rp, pms_permissions AS p1
 			where rp.permission_id = p1.id
 			and rp.role_id IN ( ? )
 			and p1.parent_id in (select p2.parent_id from pms_permissions AS p2 where p2.url like '` + url + `%')
 			order by p1.id`
 	o := orm.NewOrm()
-	nums, err = o.Raw(sql, roleid).QueryRows(&users)
+	nums, err = o.Raw(sql, roleid).QueryRows(&urls)
 
-	return nums, err, users
+	return nums, err, urls
 }

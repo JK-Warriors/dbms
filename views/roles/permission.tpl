@@ -14,27 +14,14 @@
       <!--toggle button start-->
       <a class="toggle-btn"><i class="fa fa-bars"></i></a>
       <!--toggle button end-->
-      <!--search start-->
-      <form class="searchform" action="/permission/manage" method="get">
-        <input type="text" class="form-control" name="keywords" placeholder="请输入名称" value="{{.condArr.keywords}}"/>
-		<select name="parentid" class="form-control">
-                      <option value="">请选择父节点</option>
-					{{range .parentpermissions}}
-                      <option value="{{.Id}}" {{if eq .Id $.parentids}}selected{{end}}>{{.Name}}</option>
-					{{end}}
-                    </select>
-        <button type="submit" class="btn btn-primary">搜索</button>
-      </form>
-      <!--search end-->
       {{template "inc/user-info.tpl" .}} </div>
     <!-- header section end-->
     <!-- page heading start-->
     <div class="page-heading">
       <!-- <h3> 组织管理 {{template "users/nav.tpl" .}}</h3>-->
       <ul class="breadcrumb pull-left">
-        <li> <a href="/user/manage">用户权限</a> </li>
         <li> <a href="/permission/manage">权限管理</a> </li>
-        <li class="active"> 权限 </li>
+        <li class="active"> 权限列表 </li>
       </ul>
       <!-- <div class="pull-right"> <a href="/permission/add" class="btn btn-success">+新增权限</a> </div>-->
     </div>
@@ -43,6 +30,30 @@
     <div class="wrapper">
       <div class="row">
         <div class="col-sm-12">
+          <div class="searchdiv">
+            <div class="search-form">
+              <div class="form-inline">
+                <div class="form-group">
+                  <!--search start-->
+                  <form action="/permission/manage" method="get">
+                    <input type="text" class="form-control" name="keywords" placeholder="请输入名称" value="{{.condArr.keywords}}"/>
+                    <select name="parentid" class="form-control">
+                      <option value="">请选择父节点</option>
+                      {{range .parentpermissions}}
+                        <option value="{{.Id}}" {{if eq .Id $.parentids}}selected{{end}}>{{.Name}}</option>
+                      {{end}}
+                    </select>
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i>搜索</button>
+                    <a href="/permission/manage" class="btn btn-default" type="submit"> <i class="fa fa-reset"></i> 重置 </a>
+                  </form>
+                  <!--search end-->
+                </div>
+                <div class="pull-right">
+                </div>
+              </div>
+            </div>
+          </div>
+
           <section class="panel">
             <header class="panel-heading"> 权限管理 / 总数：{{.countPermission}}<span class="tools pull-right"><a href="javascript:;" class="fa fa-chevron-down"></a> </span> </header>
             <div class="panel-body">

@@ -14,29 +14,39 @@
       <!--toggle button start-->
       <a class="toggle-btn"><i class="fa fa-bars"></i></a>
       <!--toggle button end-->
-      <!--search start-->
-      <form class="searchform" action="/role/manage" method="get">
-        <input type="text" class="form-control" name="keywords" placeholder="请输入角色名" value="{{.condArr.keywords}}"/>
-        <button type="submit" class="btn btn-primary">搜索</button>
-      </form>
-      <!--search end-->
       {{template "inc/user-info.tpl" .}} </div>
     <!-- header section end-->
     <!-- page heading start-->
     <div class="page-heading">
       <!-- <h3> 组织管理 {{template "users/nav.tpl" .}}</h3>-->
       <ul class="breadcrumb pull-left">
-        <li> <a href="/user/manage">用户权限</a> </li>
         <li> <a href="/role/manage">角色管理</a> </li>
-        <li class="active"> 角色 </li>
+        <li class="active"> 角色列表 </li>
       </ul>
-      <div class="pull-right"> <a href="/role/add" class="btn btn-success">+新增角色</a> </div>
     </div>
     <!-- page heading end-->
     <!--body wrapper start-->
     <div class="wrapper">
       <div class="row">
         <div class="col-sm-12">
+            <div class="search-form">
+              <div class="form-inline">
+                <div class="form-group">
+                  <!--search start-->
+                  <form action="/role/manage" method="get">
+                    <input type="text" class="form-control" name="keywords" placeholder="请输入角色名" value="{{.condArr.keywords}}"/>
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i>搜索</button>
+                    <a href="/role/manage" class="btn btn-default" type="submit"> <i class="fa fa-reset"></i> 重置 </a>
+                  </form>
+                  <!--search end-->
+                </div>
+                <div class="pull-right">
+                  <a href="/user/add" class="btn btn-success" id="add_role"><i class="fa fa-plus"></i> 新增角色</a>
+                </div>
+              </div>
+            </div>
+
+
           <section class="panel">
             <header class="panel-heading"> 角色管理 / 总数：{{.countRole}}<span class="tools pull-right"><a href="javascript:;" class="fa fa-chevron-down"></a> </span> </header>
             <div class="panel-body">

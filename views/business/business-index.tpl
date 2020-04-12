@@ -1,95 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>{{config "String" "globaltitle" ""}}</title>
-    {{template "inc/meta.tpl" .}}
-  </head>
-  <body class="sticky-header">
-    <section>
-      {{template "inc/left.tpl" .}}
-      <!-- main content start-->
-      <div class="main-content">
-        <!-- header section start-->
-        <div class="header-section">
-          <a class="toggle-btn"><i class="fa fa-bars"></i></a>
-          <!--search start-->
-          <!--search end-->
-          {{template "inc/user-info.tpl" .}}
-        </div>
-        <!-- header section end-->
-        <!-- page heading start-->
-        <div class="page-heading">
-          <!-- <h3> 日志管理 </h3>-->
-          <ul class="breadcrumb pull-left">
-            <li><a href="/business/manage">业务系统配置</a></li>
-            <li class="active">系统列表</li>
-          </ul>
-        </div>
-        <!-- page heading end-->
-        <!--body wrapper start-->
-        <div class="wrapper">
-          <div class="row">
-            <div class="col-sm-12">
-              <!-- 主体内容 开始 -->
-              <div class="tablepage">
-                <div class="searchdiv">
-                  <div class="search-form">
-                    <div class="form-inline">
-                      <div class="form-group">
-                        <form action="/business/manage" method="get">
-                        <input type="text" name="search_name" placeholder="搜索内容" class="form-control" value="{{.condArr.search_name}}"/>
-                        <button class="btn btn-primary" type="submit"> <i class="fa fa-search"></i> 搜索 </button>
-                        <a href="/business/manage" class="btn btn-default" type="submit"> <i class="fa fa-reset"></i> 重置 </a>
-                        </form>
-                      </div>
-                    </div>
+<head>
+<meta charset="utf-8" />
+<title>{{config "String" "globaltitle" ""}}</title>
+{{template "inc/meta.tpl" .}}
+</head>
+<body class="sticky-header">
+<section>
+  {{template "inc/left.tpl" .}}
+  <!-- main content start-->
+  <div class="main-content">
+    <!-- header section start-->
+    <div class="header-section">
+      <a class="toggle-btn"><i class="fa fa-bars"></i></a>
+      <!--search start-->
+      <!--search end-->
+      {{template "inc/user-info.tpl" .}}
+    </div>
+    <!-- header section end-->
+    <!-- page heading start-->
+    <div class="page-heading">
+      <!-- <h3> 日志管理 </h3>-->
+      <ul class="breadcrumb pull-left">
+        <li><a href="/business/manage">业务系统配置</a></li>
+        <li class="active">系统列表</li>
+      </ul>
+    </div>
+    <!-- page heading end-->
+    <!--body wrapper start-->
+    <div class="wrapper">
+      <div class="row">
+        <div class="col-sm-12">
+          <!-- 主体内容 开始 -->
+            <div class="searchdiv">
+              <div class="search-form">
+                <div class="form-inline">
+                  <div class="form-group">
+                    <form action="/business/manage" method="get">
+                    <input type="text" name="search_name" placeholder="请输入名称" class="form-control" value="{{.condArr.search_name}}"/>
+                    <button class="btn btn-primary" type="submit"> <i class="fa fa-search"></i> 搜索 </button>
+                    <a href="/business/manage" class="btn btn-default" type="submit"> <i class="fa fa-reset"></i> 重置 </a>
+                    </form>
                   </div>
-                  <div class="pull-right">
-                    <a href="#" class="btn btn-primary" id="add_business">
-                      <i class="fa fa-plus"></i> 新增</a>
-                  </div>
-                </div>
-                <div class="tablediv">
-                  <table class="table table-bordered">
-                    <thead>
-                      <tr>
-                        <th>业务系统名称</th>
-                        <th>操作</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                    {{range $k,$v := .bsconf}}
-                      <tr>
-                        <td>{{$v.BsName}}</td>
-                        <td>
-                          <a href="javascript:;" class="table_btn table_btn_icon" onclick="edit_bs(this)" data-id="{{$v.Id}}" data-name="{{$v.BsName}}">
-                            <i class="iconfont icon-btn_edit"></i>编辑
-                          </a>
-                          <a href="/dbconfig/manage" class="table_btn">
-                            <i class="iconfont icon-xianghujiaohuan"></i>数据库配置
-                          </a>
-                          <a href="javascript:;" class="table_btn table_btn_icon" onclick="delete_bs(this)" data-id="{{$v.Id}}">
-                            <i class="iconfont icon-iconfontshanchu"></i>
-                          </a>
-                        </td>
-                      </tr>
-                    {{end}}
-                    </tbody>
-                  </table>
                 </div>
               </div>
-
-              <!-- 主体内容 结束 -->
+              <div class="pull-right">
+                <a href="javascript:;" class="btn btn-success" id="add_business">
+                  <i class="fa fa-plus"></i> 新增业务</a>
+              </div>
             </div>
-          </div>
+
+            <section class="panel">
+              <header class="panel-heading"> 业务系统列表 / 总数：{{.countBs}}
+                <span class="tools pull-right"><a href="javascript:;" class="fa fa-chevron-down"></a>
+                <!--a href="javascript:;" class="fa fa-times"></a-->
+                </span> 
+              </header>
+              <div class="panel-body">
+                <section id="unseen">
+                  <form id="user-form-list">
+                    <table class="table table-bordered table-striped table-condensed">
+                      <thead>
+                        <tr>
+                          <th>业务系统名称</th>
+                          <th>操作</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      {{range $k,$v := .bsconf}}
+                        <tr>
+                          <td>{{$v.BsName}}</td>
+                          <td>
+                            <a href="javascript:;" class="table_btn table_btn_icon" onclick="edit_bs(this)" data-id="{{$v.Id}}" data-name="{{$v.BsName}}">
+                              <i class="iconfont icon-btn_edit"></i>编辑
+                            </a>
+                            <a href="/dbconfig/manage" class="table_btn">
+                              <i class="iconfont icon-xianghujiaohuan"></i>数据库配置
+                            </a>
+                            <a href="javascript:;" class="table_btn table_btn_icon" onclick="delete_bs(this)" data-id="{{$v.Id}}">
+                              <i class="iconfont icon-iconfontshanchu"></i>
+                            </a>
+                          </td>
+                        </tr>
+                      {{end}}
+                      </tbody>
+                    </table>
+                  </form>
+                  {{template "inc/page.tpl" .}}
+                </section>
+              </div>
+            </section>
+          <!-- 主体内容 结束 -->
         </div>
-        <!--body wrapper end-->
       </div>
-      <!-- main content end-->
-    </section>
-    
-    <form id="business-form">
+    </div>
+    <!--body wrapper end-->
+    <!--footer section start-->
+    {{template "inc/foot-info.tpl" .}}
+    <!--footer section end-->
+  </div>
+  <!-- main content end-->
+      
+  <form id="business-form">
     <div id="business_box" class="layui_drm">
       <div class="layercontent">
         <!-- layer content start -->
@@ -110,10 +122,11 @@
       </div>
       <!-- layer content end -->
     </div>
-    </form>
-    {{template "inc/foot.tpl" .}}
-  </body>
-  <script>
+  </form>
+</section>
+
+{{template "inc/foot.tpl" .}}    
+<script>
     //layer
     $(function() {
       $('#add_business').click(function() {
@@ -207,5 +220,6 @@
         }
 
     });
-  </script>
+</script>
+</body>
 </html>
