@@ -56,7 +56,9 @@ func (this *BaseController) Prepare() {
 		//fmt.Println(this.GetSession("userGroupid").(string))
 		//左侧导航
 		url := this.Ctx.Request.RequestURI
+		n_url := ""
 		url_first_part := ""
+		url_sec_part := ""
 		//utils.LogDebug(string(url[1:]))
 		if strings.Index(url, "/") >= 0 {
 			if strings.Index(url, "?") >= 0 {
@@ -68,16 +70,31 @@ func (this *BaseController) Prepare() {
 			sec_pos := strings.Index(url[1:], "/")
 			if sec_pos >= 0 {
 				url_first_part = url[0 : sec_pos+1]
-				//utils.LogDebug(first_part)
+				//utils.LogDebug(url_first_part)
+				n_url = url[sec_pos+2:]
+
+				third_pos := strings.Index(n_url, "/")
+
+				if third_pos >= 0 {
+					url_sec_part = n_url[0:third_pos]
+					//utils.LogDebug(url_sec_part)
+				}
 			}
 		}
-		//点首页的时候，只有一个 / 或者为空时
-		if url_first_part == "/" || url_first_part == "" {
-			url_first_part = "---"
+		if url_sec_part != "" {
+			n_url = url_first_part + "/" + url_sec_part
+		} else {
+			n_url = url_first_part
 		}
 
+		//点首页的时候，只有一个 / 或者为空时
+		if n_url == "/" || n_url == "" {
+			n_url = "---"
+		}
+
+		this.Data["url_first_part"] = url_first_part
 		//_, _, leftNav := ListRoleUserPermission(this.GetSession("userRoleid").(string))
-		_, _, leftNav := GetLeftNav(this.GetSession("userRoleid").(string), url_first_part)
+		_, _, leftNav := GetLeftNav(this.GetSession("userRoleid").(string), n_url)
 		this.Data["leftNav"] = leftNav
 
 	}

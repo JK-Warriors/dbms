@@ -39,6 +39,7 @@
       {{end}}
   </ul>
 
+  <!--
   <ul class="nav" id="side-menu">
         <li>
           <a href="#">
@@ -47,8 +48,8 @@
           <ul class="nav nav-second-level">
             <li><a href="/demo/base"><b>基础表格页</b></a></li>
             <li><a href="/demo/index" ><b>基础UI</b></a></li>
-            <!-- <li><a href="/demo/form"><b>表单</b></a></li> -->
-            <!-- <li><a href="/demo/base">index</a></li> -->
+            <li><a href="/demo/form"><b>表单</b></a></li>
+            <li><a href="/demo/base">index</a></li>
           </ul>
         </li>
         <li>
@@ -66,7 +67,7 @@
             <li><a href="#"><b>二级菜单</b></a></li>
           </ul>
         </li>
-      </ul>
+      </ul>-->
   </div>
   <!--sidebar nav end-->
   

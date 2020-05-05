@@ -22,8 +22,8 @@
     <div class="page-heading">
       <!-- <h3> 日志管理 </h3>-->
       <ul class="breadcrumb pull-left">
-        <li><a href="/business/manage">业务系统配置</a></li>
-        <li class="active">系统列表</li>
+        <li><a href="/operation/disaster_switch/manage">操作</a></li>
+        <li class="active">容灾切换</li>
       </ul>
     </div>
     <!-- page heading end-->
@@ -43,10 +43,6 @@
                     </form>
                   </div>
                 </div>
-              </div>
-              <div class="pull-right">
-                <a href="javascript:;" class="btn btn-success" id="add_business">
-                  <i class="fa fa-plus"></i> 新增业务</a>
               </div>
             </div>
 
@@ -71,14 +67,8 @@
                         <tr>
                           <td>{{$v.BsName}}</td>
                           <td>
-                            <a href="javascript:;" class="table_btn table_btn_icon" onclick="edit_bs(this)" data-id="{{$v.Id}}" data-name="{{$v.BsName}}">
-                              <i class="iconfont icon-btn_edit"></i>编辑
-                            </a>
-                            <a href="/config/disaster/edit/{{$v.Id}}" class="table_btn">
-                              <i class="iconfont icon-xianghujiaohuan"></i>容灾配置
-                            </a>
-                            <a href="javascript:;" class="table_btn table_btn_icon" onclick="delete_bs(this)" data-id="{{$v.Id}}">
-                              <i class="iconfont icon-iconfontshanchu"></i>
+                            <a href="/operation/disaster_switch/view/{{$v.Id}}" class="table_btn">
+                              <i class="iconfont icon-xianghujiaohuan"></i>容灾详细
                             </a>
                           </td>
                         </tr>

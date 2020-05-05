@@ -34,6 +34,17 @@
               <form class="form-horizontal adminex-form" id="dbconfig-form">
                 <header><b> 基本信息 </b></header>
                 <div class="form-group">
+                  <label class="col-sm-2 col-sm-2 control-label"><span></span>业务系统名</label>
+                  <div class="col-sm-10">
+                    <select id="bs_id" name="bs_id" class="form-control">
+                      <option value="">请选择系统</option>
+                      {{range $k,$v := .bsconf}}
+                        <option value="{{$v.Id}}" {{if eq $.dbconf.Bs_Id $v.Id}}selected{{end}}>{{$v.BsName}}</option>
+                      {{end}}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
                   <label class="col-sm-2 col-sm-2 control-label"><span>*</span>数据库类型</label>
                   <div class="col-sm-10">
                     <select id="db_type" name="db_type" class="form-control">
@@ -142,6 +153,7 @@
         id =  {{.dbconf.Id}};
         if(id && id > 0){
             $('#db_type').attr("disabled",true);
+            $('#bs_id').attr("disabled",true);
         }
     });  
 

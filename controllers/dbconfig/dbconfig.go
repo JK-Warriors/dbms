@@ -1,15 +1,15 @@
 package dbconfig
 
 import (
-	"opms/controllers"
-	. "opms/models/dbconfig"
-	"strings"
-	"strconv"
 	"fmt"
+	"opms/controllers"
+	. "opms/models/business"
+	. "opms/models/dbconfig"
+	"strconv"
+	"strings"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/utils/pagination"
-
 )
 
 //库管理
@@ -51,10 +51,8 @@ func (this *ManageDBConfigController) Get() {
 	this.Data["dbconf"] = dbconf
 	this.Data["countDb"] = countDb
 
-
 	this.TplName = "dbconfig/dbconfig-index.tpl"
 }
-
 
 //添加数据库配置信息
 type AddDBConfigController struct {
@@ -66,9 +64,12 @@ func (this *AddDBConfigController) Get() {
 	if !strings.Contains(this.GetSession("userPermission").(string), "dbconfig-add") {
 		this.Abort("401")
 	}
-	
+
 	var dbconf Dbconfigs
 	this.Data["dbconf"] = dbconf
+
+	bsconf := ListAllBusiness()
+	this.Data["bsconf"] = bsconf
 
 	this.TplName = "dbconfig/dbconfig-form.tpl"
 }
@@ -80,6 +81,8 @@ func (this *AddDBConfigController) Post() {
 		this.ServeJSON()
 		return
 	}
+
+	bs_id, _ := this.GetInt("bs_id")
 
 	db_type, _ := this.GetInt("db_type")
 	if db_type <= 0 {
@@ -123,7 +126,6 @@ func (this *AddDBConfigController) Post() {
 		return
 	}
 
-
 	var dbconf Dbconfigs
 
 	dbconf.Dbtype = db_type
@@ -134,10 +136,10 @@ func (this *AddDBConfigController) Post() {
 	dbconf.Dbname = this.GetString("db_name")
 	dbconf.Username = username
 	dbconf.Password = password
+	dbconf.Bs_Id = bs_id
 	dbconf.Role = role
 
 	err := AddDBconfig(dbconf)
-
 
 	if err == nil {
 		this.Data["json"] = map[string]interface{}{"code": 1, "message": "数据库配置信息添加成功"}
@@ -146,7 +148,6 @@ func (this *AddDBConfigController) Post() {
 	}
 	this.ServeJSON()
 }
-
 
 //修改数据库配置信息
 type EditDBConfigController struct {
@@ -165,7 +166,10 @@ func (this *EditDBConfigController) Get() {
 		this.Abort("404")
 	}
 	this.Data["dbconf"] = dbconf
-	
+
+	bsconf := ListAllBusiness()
+	this.Data["bsconf"] = bsconf
+
 	this.TplName = "dbconfig/dbconfig-form.tpl"
 }
 
@@ -176,6 +180,7 @@ func (this *EditDBConfigController) Post() {
 		this.ServeJSON()
 		return
 	}
+
 	id, _ := this.GetInt("id")
 	if id <= 0 {
 		this.Data["json"] = map[string]interface{}{"code": 0, "message": "用户参数出错"}
@@ -183,14 +188,13 @@ func (this *EditDBConfigController) Post() {
 		return
 	}
 
-	
 	db_type, _ := this.GetInt("db_type")
 	if db_type <= 0 {
 		this.Data["json"] = map[string]interface{}{"code": 0, "message": "请选择数据库类型"}
 		this.ServeJSON()
 		return
 	}
-	
+
 	host := this.GetString("host")
 	if "" == host {
 		this.Data["json"] = map[string]interface{}{"code": 0, "message": "请填写主机IP"}
@@ -219,13 +223,14 @@ func (this *EditDBConfigController) Post() {
 		return
 	}
 
+	bs_id, _ := this.GetInt("bs_id")
+
 	role, _ := this.GetInt("role")
 	if role <= 0 {
 		this.Data["json"] = map[string]interface{}{"code": 0, "message": "请选择角色"}
 		this.ServeJSON()
 		return
 	}
-
 
 	var dbconf Dbconfigs
 
@@ -237,6 +242,7 @@ func (this *EditDBConfigController) Post() {
 	dbconf.Dbname = this.GetString("db_name")
 	dbconf.Username = username
 	dbconf.Password = password
+	dbconf.Bs_Id = bs_id
 	dbconf.Role = role
 
 	err := UpdateDBconfig(id, dbconf)
@@ -248,7 +254,6 @@ func (this *EditDBConfigController) Post() {
 	}
 	this.ServeJSON()
 }
-
 
 //数据库配置状态更改异步操作
 type AjaxStatusDBConfigController struct {
@@ -286,7 +291,6 @@ func (this *AjaxStatusDBConfigController) Post() {
 	this.ServeJSON()
 }
 
-
 type AjaxDeleteDBConfigController struct {
 	controllers.BaseController
 }
@@ -314,4 +318,3 @@ func (this *AjaxDeleteDBConfigController) Post() {
 	}
 	this.ServeJSON()
 }
-

@@ -61,15 +61,16 @@ CREATE TABLE `pms_permissions` (
 -- ----------------------------
 -- Records of pms_permissions
 -- ----------------------------
-INSERT INTO `pms_permissions` VALUES ('0', '0', '根节点', 'root', '/root', 'fa-root', '0', '0', '0');
+INSERT INTO `pms_permissions` VALUES ('0', '0', '根节点', 'root', '/root', '', '0', '0', '0');
 INSERT INTO `pms_permissions` VALUES ('1', '0', '系统管理', 'system', '/system', '', '1', '0', '1');
-INSERT INTO `pms_permissions` VALUES ('2', '0', '业务配置', 'config', '/config', 'fa-config', '1', '0', '2');
+INSERT INTO `pms_permissions` VALUES ('2', '0', '业务配置', 'config', '/config', '', '1', '0', '2');
+INSERT INTO `pms_permissions` VALUES ('3', '0', '操作', 'operation', '/operation', '', '1', '0', '3');
 
 INSERT INTO `pms_permissions` VALUES ('1010', '1', '用户管理', 'user-manage', '/user/manage', 'fa-user', '1', '1', '0');
 INSERT INTO `pms_permissions` VALUES ('1011', '1', '添加用户', 'user-add', '/user/add', null, '0', '0', '0');
 INSERT INTO `pms_permissions` VALUES ('1012', '1', '编辑用户', 'user-edit', '/user/edit', null, '0', '0', '0');
 INSERT INTO `pms_permissions` VALUES ('1013', '1', '删除用户', 'user-delete', '/user/delete', '', '0', '0', '0');
-INSERT INTO `pms_permissions` VALUES ('1020', '1', '角色管理', 'role-manage', '/role/manage', 'fa-user', '1', '1', '1');
+INSERT INTO `pms_permissions` VALUES ('1020', '1', '角色管理', 'role-manage', '/role/manage', '', '1', '1', '1');
 INSERT INTO `pms_permissions` VALUES ('1021', '1', '添加角色', 'role-add', '/role/add', '', '0', '0', '0');
 INSERT INTO `pms_permissions` VALUES ('1022', '1', '编辑角色', 'role-edit', '/role/edit', '', '0', '0', '0');
 INSERT INTO `pms_permissions` VALUES ('1023', '1', '删除角色', 'role-delete', '/role/delete', '', '0', '0', '0');
@@ -77,30 +78,36 @@ INSERT INTO `pms_permissions` VALUES ('1024', '1', '角色权限', 'role-permiss
 -- INSERT INTO `pms_permissions` VALUES ('1025', '1', '角色成员', 'role-user', '/role/user', '', '0', '0', '0');
 -- INSERT INTO `pms_permissions` VALUES ('1026', '1', '添加角色', 'role-user-add', '/role/useradd', '', '0', '0', '0');
 -- INSERT INTO `pms_permissions` VALUES ('1027', '1', '删除角色', 'role-user-delete', '/role/userdelete', '', '0', '0', '0');
-INSERT INTO `pms_permissions` VALUES ('1030', '1', '权限管理', 'permission-manage', '/permission/manage', 'fa-user', '1', '1', '2');
+INSERT INTO `pms_permissions` VALUES ('1030', '1', '权限管理', 'permission-manage', '/permission/manage', '', '0', '0', '0');
 INSERT INTO `pms_permissions` VALUES ('1031', '1', '添加权限', 'permission-add', '/permission/add', '', '0', '0', '0');
 INSERT INTO `pms_permissions` VALUES ('1032', '1', '编辑权限', 'permission-edit', '/permission/edit', '', '0', '0', '0');
 INSERT INTO `pms_permissions` VALUES ('1033', '1', '删除权限', 'permission-delete', '/permission/delete', '', '0', '0', '0');
 
-INSERT INTO `pms_permissions` VALUES ('1040', '1', '日志管理', 'log-manage', '/log/manage', 'fa-user', '1', '1', '1');
-INSERT INTO `pms_permissions` VALUES ('1041', '1', '日志删除', 'log-delete', '/log/delete', 'fa-user', '0', '0', '0');
+INSERT INTO `pms_permissions` VALUES ('1040', '1', '日志管理', 'log-manage', '/log/manage', '', '1', '1', '1');
+INSERT INTO `pms_permissions` VALUES ('1041', '1', '日志删除', 'log-delete', '/log/delete', '', '0', '0', '0');
 
-INSERT INTO `pms_permissions` VALUES ('1050', '1', '消息管理', 'message-manage', '/message/manage', 'fa-user', '0', '0', '0');
-INSERT INTO `pms_permissions` VALUES ('1051', '1', '消息删除', 'message-delete', '/message/delete', 'fa-user', '0', '0', '0');
+INSERT INTO `pms_permissions` VALUES ('1050', '1', '消息管理', 'message-manage', '/message/manage', '', '0', '0', '0');
+INSERT INTO `pms_permissions` VALUES ('1051', '1', '消息删除', 'message-delete', '/message/delete', '', '0', '0', '0');
 
 
-INSERT INTO `pms_permissions` VALUES ('1100', '2', '业务系统配置', 'business-manage', '/business/manage', 'fa-user', '1', '1', '1');
+INSERT INTO `pms_permissions` VALUES ('1100', '2', '业务系统配置', 'business-manage', '/business/manage', '', '1', '1', '1');
 INSERT INTO `pms_permissions` VALUES ('1101', '2', '添加业务系统', 'business-add', '/business/add', '', '0', '0', '0');
 INSERT INTO `pms_permissions` VALUES ('1102', '2', '编辑业务系统', 'business-edit', '/business/edit', '', '0', '0', '0');
 INSERT INTO `pms_permissions` VALUES ('1103', '2', '删除业务系统', 'business-delete', '/business/delete', '', '0', '0', '0');
 
 
-INSERT INTO `pms_permissions` VALUES ('1110', '2', '数据库配置', 'dbconfig-manage', '/dbconfig/manage', 'fa-user', '1', '1', '2');
+INSERT INTO `pms_permissions` VALUES ('1110', '2', '数据库配置', 'dbconfig-manage', '/dbconfig/manage', '', '1', '1', '2');
 INSERT INTO `pms_permissions` VALUES ('1111', '2', '添加数据库', 'dbconfig-add', '/dbconfig/add', '', '0', '0', '0');
 INSERT INTO `pms_permissions` VALUES ('1112', '2', '编辑数据库', 'dbconfig-edit', '/dbconfig/edit', '', '0', '0', '0');
 INSERT INTO `pms_permissions` VALUES ('1113', '2', '删除数据库', 'dbconfig-delete', '/dbconfig/delete', '', '0', '0', '0');
 
+INSERT INTO `pms_permissions` VALUES ('1120', '2', '容灾配置', 'config-recover', '/config/disaster/manage', '', '1', '1', '3');
 
+INSERT INTO `pms_permissions` VALUES ('1130', '3', '容灾切换', 'oper-switch-manage', '/operation/disaster_switch/manage', '', '1', '1', '1');
+INSERT INTO `pms_permissions` VALUES ('1131', '3', '容灾切换', 'oper-switch-view', '/operation/disaster_switch/view', '', '0', '0', '1');
+INSERT INTO `pms_permissions` VALUES ('1132', '3', '容灾激活', 'oper-active-manage', '/operation/disaster_active/manage', '', '1', '1', '2');
+INSERT INTO `pms_permissions` VALUES ('1133', '3', '容灾同步', 'oper-sync-manage', '/operation/disaster_sync/manage', '', '1', '1', '3');
+INSERT INTO `pms_permissions` VALUES ('1134', '3', '容灾快照', 'oper-snapshot-manage', '/operation/disaster_snapshot/manage', '', '1', '1', '4');
 -- ----------------------------
 -- Table structure for pms_role_permission
 -- ----------------------------
@@ -149,6 +156,13 @@ INSERT INTO `pms_role_permission` VALUES ('29', '1', '1110');
 INSERT INTO `pms_role_permission` VALUES ('30', '1', '1111');
 INSERT INTO `pms_role_permission` VALUES ('31', '1', '1112');
 INSERT INTO `pms_role_permission` VALUES ('32', '1', '1113');
+INSERT INTO `pms_role_permission` VALUES ('33', '1', '1120');
+
+INSERT INTO `pms_role_permission` VALUES ('34', '1', '1130');
+INSERT INTO `pms_role_permission` VALUES ('35', '1', '1131');
+INSERT INTO `pms_role_permission` VALUES ('36', '1', '1132');
+INSERT INTO `pms_role_permission` VALUES ('37', '1', '1133');
+INSERT INTO `pms_role_permission` VALUES ('38', '1', '1134');
 
 
 
@@ -280,6 +294,7 @@ CREATE TABLE `pms_db_config` (
   `db_name` varchar(50) DEFAULT '' COMMENT '数据库名',
   `username` varchar(30) DEFAULT '' COMMENT '用户名',
   `password` varchar(255) DEFAULT '' COMMENT '密码',
+  `bs_id` int(10) DEFAULT NULL COMMENT '业务系统ID',
   `role` tinyint(2) DEFAULT 1 COMMENT '1：主；2: 备',
   `status` tinyint(2) DEFAULT 1 COMMENT '1: 激活；0：禁用',
   `is_delete` tinyint(2) DEFAULT 0 COMMENT '1: 删除；0：未删除',
@@ -306,6 +321,42 @@ CREATE TABLE `pms_business` (
   KEY `bs_name` (`bs_name`)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='业务系统配置表';
 
+
+-- -----------------------------------------------------------------------------
+-- Table structure for pms_disaster_config
+-- -----------------------------------------------------------------------------
+DROP TABLE IF EXISTS `pms_disaster_config`;
+CREATE TABLE `pms_disaster_config` (
+  `bs_id` int(10) unsigned NOT NULL COMMENT 'Business Id',
+  `db_id_p` int(10) COMMENT 'primary db id',
+  `db_dest_p` tinyint(2) COMMENT 'primary dest id',
+  `db_id_s` int(10) COMMENT 'standby db id',
+  `db_dest_s` tinyint(2) COMMENT 'standby dest id',
+  `fb_retention` int(10) COMMENT 'flashback retention',
+  `is_shift` tinyint(1),
+  `shift_vips` varchar(400),
+  `network_p` varchar(100) COMMENT 'primary network card',
+  `network_s` varchar(100) COMMENT 'standby network card',
+  `is_switch` tinyint(1) DEFAULT 0,
+  `on_process` tinyint(1) DEFAULT 0,
+  `on_switchover` tinyint(1) DEFAULT 0,
+  `on_failover` tinyint(1) DEFAULT 0,
+  `on_startmrp` tinyint(1) DEFAULT 0,
+  `on_stopmrp` tinyint(1) DEFAULT 0,
+  `on_startsnapshot` tinyint(1) DEFAULT 0,
+  `on_stopsnapshot` tinyint(1) DEFAULT 0,
+  `created` int(10) DEFAULT NULL COMMENT '创建时间',
+  `updated` int(10) DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`bs_id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='业务系统配置扩展表';
+
+alter table pms_disaster_config modify column on_process tinyint(1) DEFAULT 0 comment '值为1时，表明正在进行Switchover，或者Failover，或者开启停止MRP进程'; 
+alter table pms_disaster_config modify column on_switchover tinyint(1) DEFAULT 0 comment '值为1时，表明当前正在进行Switchover切换'; 
+alter table pms_disaster_config modify column on_failover tinyint(1) DEFAULT 0 comment '值为1时，表明当前正在进行Failover切换'; 
+alter table pms_disaster_config modify column on_startmrp tinyint(1) DEFAULT 0 comment '值为1时，表明当前正在开启MRP进程'; 
+alter table pms_disaster_config modify column on_stopmrp tinyint(1) DEFAULT 0 comment '值为1时，表明当前正在停止MRP进程'; 
+alter table pms_disaster_config modify column on_startsnapshot tinyint(1) DEFAULT 0 comment '值为1时，表明当前正在激活数据库快照'; 
+alter table pms_disaster_config modify column on_stopsnapshot tinyint(1) DEFAULT 0 comment '值为1时，表明当前正在从快照恢复到物理备库'; 
 
 -- -----------------------------------------------------------------------------
 -- Table structure for pms_template
@@ -371,6 +422,73 @@ CREATE TABLE `pms_db_status` (
   `updated` int(10) DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+-- ----------------------------
+-- Table structure for pms_op_process
+-- ----------------------------
+DROP TABLE IF EXISTS `pms_op_process`;
+CREATE TABLE `pms_op_process` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `db_type` varchar(50) NOT NULL,
+  `bs_id` int(10) NOT NULL,
+  `process_type` varchar(20) COMMENT '2个类型：SWITCHOVER;FAILOVER;',
+  `process_desc` varchar(1000),
+  `rate` tinyint(1) DEFAULT 0,
+  `created` int(10) DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  KEY `idx_op_type` (`db_type`, `bs_id`, `process_type`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for pms_op_process_his
+-- ----------------------------
+DROP TABLE IF EXISTS `pms_op_process_his`;
+CREATE TABLE `pms_op_process_his` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `db_type` varchar(50) NOT NULL,
+  `bs_id` int(10) NOT NULL,
+  `process_type` varchar(20) COMMENT '2个类型：SWITCHOVER;FAILOVER;',
+  `process_desc` varchar(1000),
+  `rate` tinyint(1) DEFAULT 0,
+  `created` int(10) DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  KEY `idx_op_type` (`db_type`, `bs_id`, `process_type`,`created`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
+
+
+-- ----------------------------
+-- Table structure for pms_opration
+-- ----------------------------
+DROP TABLE IF EXISTS `pms_opration`;
+CREATE TABLE `pms_opration` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `db_type` varchar(50) NOT NULL,
+  `bs_id` int(10) NOT NULL,
+  `op_type` varchar(20),
+  `result` varchar(2),
+  `reason` varchar(1000),
+  `created` int(10) DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  KEY `idx_op_type` (`db_type`,`bs_id`,`op_type`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for pms_opration_his
+-- ----------------------------
+DROP TABLE IF EXISTS `pms_opration_his`;
+CREATE TABLE `pms_opration_his` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `db_type` varchar(50) NOT NULL,
+  `bs_id` int(10) NOT NULL,
+  `op_type` varchar(20),
+  `result` varchar(2),
+  `reason` varchar(1000),
+  `created` int(10) DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  KEY `idx_op_type` (`db_type`, `bs_id`, `op_type`,`created`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8;
 
 /*
 CREATE TABLE `history_uint` (

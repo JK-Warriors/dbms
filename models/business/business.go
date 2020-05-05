@@ -78,6 +78,18 @@ func GetBusiness(id int) (Business, error) {
 	return bsconf, err
 }
 
+func GetBusinessName(id int) string {
+	var bs_name string
+	o := orm.NewOrm()
+
+	err := o.Raw("select bs_name from pms_business where id = ?", id).QueryRow(&bs_name)
+
+	if err == orm.ErrNoRows {
+		return ""
+	}
+	return bs_name
+}
+
 //获取业务系统列表
 func ListBusiness(condArr map[string]string, page int, offset int) (num int64, err error, bsconf []Business) {
 	o := orm.NewOrm()
@@ -103,6 +115,19 @@ func ListBusiness(condArr map[string]string, page int, offset int) (num int64, e
 	qs = qs.OrderBy("id")
 	nums, errs := qs.Limit(offset, start).All(&bsconf)
 	return nums, errs, bsconf
+}
+
+func ListAllBusiness() (bsconf []Business) {
+	o := orm.NewOrm()
+	o.Using("default")
+	qs := o.QueryTable(models.TableName("business"))
+	cond := orm.NewCondition()
+
+	cond = cond.And("is_delete", 0)
+	qs = qs.SetCond(cond)
+
+	_, _ = qs.OrderBy("id").All(&bsconf)
+	return bsconf
 }
 
 //统计数量

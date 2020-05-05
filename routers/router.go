@@ -4,6 +4,8 @@ import (
 	"opms/controllers/business"
 	"opms/controllers/dbconfig"
 	"opms/controllers/demo"
+	"opms/controllers/disaster_config"
+	"opms/controllers/disaster_oper"
 	"opms/controllers/logs"
 	"opms/controllers/messages"
 	"opms/controllers/roles"
@@ -73,6 +75,20 @@ func init() {
 	beego.Router("/dbconfig/edit/:id", &dbconfig.EditDBConfigController{})
 	beego.Router("/dbconfig/ajax/status", &dbconfig.AjaxStatusDBConfigController{})
 	beego.Router("/dbconfig/ajax/delete", &dbconfig.AjaxDeleteDBConfigController{})
+
+	//容灾配置
+	beego.Router("/config/disaster/manage", &disaster_config.ManageDisasterController{})
+	beego.Router("/config/disaster/edit/:id", &disaster_config.EditDisasterController{})
+
+	//操作
+	beego.Router("/operation/disaster_switch/manage", &disaster_oper.ManageDisasterSwitchController{})
+	beego.Router("/operation/disaster_switch/view/:id", &disaster_oper.ViewDisasterSwitchController{})
+	beego.Router("/operation/disaster_switch/switchover", &disaster_oper.AjaxDisasterSwitchoverController{})
+	beego.Router("/operation/disaster_switch/failover", &disaster_oper.AjaxDisasterFailoverController{})
+	beego.Router("/operation/disaster_switch/process", &disaster_oper.AjaxDisasterProcessController{})
+	beego.Router("/operation/disaster_active/manage", &disaster_oper.ManageDisasterActiveController{})
+	beego.Router("/operation/disaster_snapshot/manage", &disaster_oper.ManageDisasterSnapshotController{})
+	beego.Router("/operation/disaster_snyc/manage", &disaster_oper.ManageDisasterSyncController{})
 
 	//UI demo
 	beego.Router("/demo/index", &demo.DemoController{})

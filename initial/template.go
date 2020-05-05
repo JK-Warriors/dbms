@@ -2,10 +2,12 @@ package initial
 
 import (
 	//"fmt"
-	"opms/models/users"
-	"opms/models/roles"
+	"opms/models/business"
 	"opms/models/dbconfig"
+	"opms/models/roles"
+	"opms/models/users"
 	"opms/utils"
+
 	//"time"
 
 	"github.com/astaxie/beego"
@@ -16,19 +18,19 @@ func InitTemplate() {
 	beego.AddFuncMap("getAvatarUserid", users.GetAvatarUserid)
 	beego.AddFuncMap("getPermissionname", roles.GetPermissiontName)
 
-	
 	beego.AddFuncMap("getDBtype", dbconfig.GetDBtype)
+	beego.AddFuncMap("getBsName", business.GetBusinessName)
 	/*
-	beego.AddFuncMap("getNeedsname", projects.GetProjectNeedsName)
-	beego.AddFuncMap("getProjectname", projects.GetProjectName)
-	beego.AddFuncMap("getLeaveProcess", leaves.ListLeaveApproverProcessHtml)
-	beego.AddFuncMap("getExpenseProcess", expenses.ListExpenseApproverProcessHtml)
-	beego.AddFuncMap("getBusinesstripProcess", businesstrips.ListBusinesstripApproverProcessHtml)
-	beego.AddFuncMap("getGooutProcess", goouts.ListGooutApproverProcessHtml)
-	beego.AddFuncMap("getOagoodProcess", oagoods.ListOagoodApproverProcessHtml)
-	beego.AddFuncMap("getOvertimeProcess", overtimes.ListOvertimeApproverProcessHtml)
+		beego.AddFuncMap("getNeedsname", projects.GetProjectNeedsName)
+		beego.AddFuncMap("getProjectname", projects.GetProjectName)
+		beego.AddFuncMap("getLeaveProcess", leaves.ListLeaveApproverProcessHtml)
+		beego.AddFuncMap("getExpenseProcess", expenses.ListExpenseApproverProcessHtml)
+		beego.AddFuncMap("getBusinesstripProcess", businesstrips.ListBusinesstripApproverProcessHtml)
+		beego.AddFuncMap("getGooutProcess", goouts.ListGooutApproverProcessHtml)
+		beego.AddFuncMap("getOagoodProcess", oagoods.ListOagoodApproverProcessHtml)
+		beego.AddFuncMap("getOvertimeProcess", overtimes.ListOvertimeApproverProcessHtml)
 	*/
-	
+
 	beego.AddFuncMap("getDate", utils.GetDate)
 	beego.AddFuncMap("getDateMH", utils.GetDateMH)
 	beego.AddFuncMap("GetDateMHS", utils.GetDateMHS)

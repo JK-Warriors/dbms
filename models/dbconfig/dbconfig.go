@@ -11,21 +11,22 @@ import (
 )
 
 type Dbconfigs struct {
-	Id           	int 		`orm:"pk;column(id);"`
-	Dbtype       	int 		`orm:"column(db_type);"`
-	Host       		string 		`orm:"column(host);"`
-	Port     		int 		`orm:"column(port);"`
-	Alias   		string 		`orm:"column(alias);"`
-	InstanceName   	string 		`orm:"column(instance_name);"`
-	Dbname        	string 		`orm:"column(db_name);"`
-	Username      	string 		`orm:"column(username);"`
-	Password        string 		`orm:"column(password);"`
-	Role    		int 		`orm:"column(role);"`
-	Status    		int 		`orm:"column(status);"`
-	IsDelete    	int 		`orm:"column(is_delete);"`
-	Retention    	int 		`orm:"column(retention);"`
-	Created    		int64 		`orm:"column(created);"`
-	Updated      	int64 		`orm:"column(updated);"`
+	Id           int    `orm:"pk;column(id);"`
+	Dbtype       int    `orm:"column(db_type);"`
+	Host         string `orm:"column(host);"`
+	Port         int    `orm:"column(port);"`
+	Alias        string `orm:"column(alias);"`
+	InstanceName string `orm:"column(instance_name);"`
+	Dbname       string `orm:"column(db_name);"`
+	Username     string `orm:"column(username);"`
+	Password     string `orm:"column(password);"`
+	Bs_Id        int    `orm:"column(bs_id);"`
+	Role         int    `orm:"column(role);"`
+	Status       int    `orm:"column(status);"`
+	IsDelete     int    `orm:"column(is_delete);"`
+	Retention    int    `orm:"column(retention);"`
+	Created      int64  `orm:"column(created);"`
+	Updated      int64  `orm:"column(updated);"`
 }
 
 func (this *Dbconfigs) TableName() string {
@@ -49,6 +50,7 @@ func AddDBconfig(upd Dbconfigs) error {
 	dbconf.Dbname = upd.Dbname
 	dbconf.Username = upd.Username
 	dbconf.Password = upd.Password
+	dbconf.Bs_Id = upd.Bs_Id
 	dbconf.Role = upd.Role
 	dbconf.Status = 1
 	dbconf.IsDelete = 0
@@ -57,13 +59,12 @@ func AddDBconfig(upd Dbconfigs) error {
 	return err
 }
 
-
 //修改数据库配置信息
 func UpdateDBconfig(id int, upd Dbconfigs) error {
 	var dbconf Dbconfigs
 	o := orm.NewOrm()
 	dbconf = Dbconfigs{Id: id}
-	
+
 	dbconf.Dbtype = upd.Dbtype
 	dbconf.Host = upd.Host
 	dbconf.Port = upd.Port
@@ -72,13 +73,13 @@ func UpdateDBconfig(id int, upd Dbconfigs) error {
 	dbconf.Dbname = upd.Dbname
 	dbconf.Username = upd.Username
 	dbconf.Password = upd.Password
+	dbconf.Bs_Id = upd.Bs_Id
 	dbconf.Role = upd.Role
 	dbconf.Updated = time.Now().Unix()
 
 	_, err := o.Update(&dbconf)
 	return err
 }
-
 
 //得到数据库配置信息
 func GetDBconfig(id int) (Dbconfigs, error) {
@@ -101,9 +102,9 @@ func GetDBtype(id int) string {
 
 	if id == 1 {
 		db_type = "Oracle"
-	}else if id == 2 {
+	} else if id == 2 {
 		db_type = "MySQL"
-	}else if id == 3 {
+	} else if id == 3 {
 		db_type = "SQLServer"
 	}
 	return db_type
@@ -125,7 +126,7 @@ func ListDBconfig(condArr map[string]string, page int, offset int) (num int64, e
 	if condArr["alias"] != "" {
 		cond = cond.And("alias__icontains", condArr["alias"])
 	}
-	
+
 	cond = cond.And("is_delete", 0)
 
 	qs = qs.SetCond(cond)
@@ -140,6 +141,49 @@ func ListDBconfig(condArr map[string]string, page int, offset int) (num int64, e
 	qs = qs.OrderBy("id")
 	nums, errs := qs.Limit(offset, start).All(&dbconf)
 	return nums, errs, dbconf
+}
+
+func ListAllDBconfig() (dbconf []Dbconfigs) {
+	o := orm.NewOrm()
+	o.Using("default")
+	qs := o.QueryTable(models.TableName("db_config"))
+	cond := orm.NewCondition()
+
+	cond = cond.And("is_delete", 0)
+	qs = qs.SetCond(cond)
+
+	_, _ = qs.OrderBy("id").All(&dbconf)
+	return dbconf
+}
+
+func ListPrimaryDBconfig(bs_id int) (dbconf []Dbconfigs) {
+	o := orm.NewOrm()
+	o.Using("default")
+	qs := o.QueryTable(models.TableName("db_config"))
+	cond := orm.NewCondition()
+
+	cond = cond.And("bs_id", bs_id)
+	cond = cond.And("role", 1)
+	cond = cond.And("is_delete", 0)
+	qs = qs.SetCond(cond)
+
+	_, _ = qs.OrderBy("id").All(&dbconf)
+	return dbconf
+}
+
+func ListStandbyDBconfig(bs_id int) (dbconf []Dbconfigs) {
+	o := orm.NewOrm()
+	o.Using("default")
+	qs := o.QueryTable(models.TableName("db_config"))
+	cond := orm.NewCondition()
+
+	cond = cond.And("bs_id", bs_id)
+	cond = cond.And("role", 2)
+	cond = cond.And("is_delete", 0)
+	qs = qs.SetCond(cond)
+
+	_, _ = qs.OrderBy("id").All(&dbconf)
+	return dbconf
 }
 
 //统计数量
@@ -162,7 +206,6 @@ func CountDBconfig(condArr map[string]string) int64 {
 	num, _ := qs.SetCond(cond).Count()
 	return num
 }
-
 
 func DeleteDBconfig(ids string) error {
 	o := orm.NewOrm()
