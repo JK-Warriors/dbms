@@ -48,6 +48,30 @@ func (this *BaseController) Get() {
 	this.TplName = "demo/base.tpl"
 }
 
+type DashboardController struct {
+	controllers.BaseController
+}
+func (this *DashboardController) Get() {
+	//权限检测
+	// if !strings.Contains(this.GetSession("userPermission").(string), "dbconfig-manage") {
+	// 	this.Abort("401")
+	// }
+
+	this.TplName = "demo/dashboard.tpl"
+}
+
+type DgscreenController struct {
+	controllers.BaseController
+}
+func (this *DgscreenController) Get() {
+	//权限检测
+	// if !strings.Contains(this.GetSession("userPermission").(string), "dbconfig-manage") {
+	// 	this.Abort("401")
+	// }
+
+	this.TplName = "demo/dgscreen.tpl"
+}
+
 // type BaseController struct {
 // 	controllers.BaseController
 // }

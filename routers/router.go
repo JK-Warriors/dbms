@@ -94,4 +94,6 @@ func init() {
 	beego.Router("/demo/index", &demo.DemoController{})
 	beego.Router("/demo/form", &demo.FormController{})
 	beego.Router("/demo/base", &demo.BaseController{})
+	beego.Router("/demo/dashboard", &demo.DashboardController{})
+	beego.Router("/demo/dgscreen", &demo.DgscreenController{})
 }
