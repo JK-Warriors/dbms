@@ -18,7 +18,7 @@ type ManageBusinessController struct {
 
 func (this *ManageBusinessController) Get() {
 	//权限检测
-	if !strings.Contains(this.GetSession("userPermission").(string), "business-manage") {
+	if !strings.Contains(this.GetSession("userPermission").(string), "config-business-manage") {
 		this.Abort("401")
 	}
 
@@ -56,7 +56,7 @@ type AddBusinessController struct {
 
 func (this *AddBusinessController) Get() {
 	//权限检测
-	if !strings.Contains(this.GetSession("userPermission").(string), "business-add") {
+	if !strings.Contains(this.GetSession("userPermission").(string), "config-business-add") {
 		this.Abort("401")
 	}
 
@@ -68,7 +68,7 @@ func (this *AddBusinessController) Get() {
 
 func (this *AddBusinessController) Post() {
 	//权限检测
-	if !strings.Contains(this.GetSession("userPermission").(string), "business-add") {
+	if !strings.Contains(this.GetSession("userPermission").(string), "config-business-add") {
 		this.Data["json"] = map[string]interface{}{"code": 0, "message": "无权新增"}
 		this.ServeJSON()
 		return
@@ -107,7 +107,7 @@ type EditBusinessController struct {
 
 func (this *EditBusinessController) Get() {
 	//权限检测
-	if !strings.Contains(this.GetSession("userPermission").(string), "business-edit") {
+	if !strings.Contains(this.GetSession("userPermission").(string), "config-business-edit") {
 		this.Abort("401")
 	}
 	idstr := this.Ctx.Input.Param(":id")
@@ -121,7 +121,7 @@ func (this *EditBusinessController) Get() {
 
 func (this *EditBusinessController) Post() {
 	//权限检测
-	if !strings.Contains(this.GetSession("userPermission").(string), "business-edit") {
+	if !strings.Contains(this.GetSession("userPermission").(string), "config-business-edit") {
 		this.Data["json"] = map[string]interface{}{"code": 0, "message": "无权编辑"}
 		this.ServeJSON()
 		return
@@ -157,7 +157,7 @@ type AjaxDeleteBusinessController struct {
 
 func (this *AjaxDeleteBusinessController) Post() {
 	//权限检测
-	if !strings.Contains(this.GetSession("userPermission").(string), "business-delete") {
+	if !strings.Contains(this.GetSession("userPermission").(string), "config-business-delete") {
 		this.Data["json"] = map[string]interface{}{"code": 0, "message": "无权删除"}
 		this.ServeJSON()
 		return

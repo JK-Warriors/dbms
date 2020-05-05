@@ -25,8 +25,8 @@
     <div class="page-heading">
       <!--<h3> 组织管理 {{template "users/nav.tpl" .}}</h3>-->
       <ul class="breadcrumb pull-left">
-        <li> <a href="/dbconfig/manage">数据库配置</a> </li>
-        <li class="active"> 数据库列表 </li>
+        <li> <a href="/config/db/manage">配置</a> </li>
+        <li class="active"> 数据库配置 </li>
       </ul>
     </div>
     <!-- page heading end-->
@@ -38,7 +38,7 @@
             <div class="search-form">
               <div class="form-inline">
                 <div class="form-group">
-                  <form action="/dbconfig/manage" method="get">
+                  <form action="/config/db/manage" method="get">
                     <select name="dbtype" class="form-control">
                       <option value="">数据库类型</option>
                       <option value="1" {{if eq "1" .condArr.dbtype}}selected{{end}}>Oracle</option>
@@ -48,11 +48,11 @@
                     <input type="text" class="form-control" name="host" placeholder="请输入IP" value="{{.condArr.host}}"/>
                     <input type="text" class="form-control" name="alias" placeholder="请输入别名" value="{{.condArr.alias}}"/>
                     <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i>搜索</button>
-                    <a href="/dbconfig/manage" class="btn btn-default" type="submit"> <i class="fa fa-reset"></i> 重置 </a>
+                    <a href="/config/db/manage" class="btn btn-default" type="submit"> <i class="fa fa-reset"></i> 重置 </a>
                   </form>
                 </div>
                 <div class="pull-right">
-                  <a href="/dbconfig/add" class="btn btn-success" id="add_business"><i class="fa fa-plus"></i> 新增数据库</a>
+                  <a href="/config/db/add" class="btn btn-success" id="add_business"><i class="fa fa-plus"></i> 新增数据库</a>
                 </div>
               </div>
             </div>
@@ -98,7 +98,7 @@
                       <td><div class="btn-group">
                           <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 操作<span class="caret"></span> </button>
                           <ul class="dropdown-menu">
-                            <li><a href="/dbconfig/edit/{{$v.Id}}">编辑</a></li>
+                            <li><a href="/config/db/edit/{{$v.Id}}">编辑</a></li>
                             <li role="separator" class="divider"></li>
                             {{if eq 1 $v.Status}}
                             <li><a href="javascript:;" class="js-dbconfig-single" data-id="{{$v.Id}}" data-status="2">禁用</a></li>
@@ -136,7 +136,7 @@
     	var that = $(this);
     	var status = that.attr('data-status')
     	var id = that.attr('data-id');
-      $.post('/dbconfig/ajax/status', { status: status, id: id },function(data){
+      $.post('/config/db/ajax/status', { status: status, id: id },function(data){
         dialogInfo(data.message)
         if (data.code) {
           that.attr('data-status', status == 2 ? 1 : 2).text(status == 2 ? '激活' : '禁用').parents('td').prev('td').text(status == 2 ? '禁用' : '激活');
@@ -157,7 +157,7 @@
 		}, function(index){
 			layer.close(index);
 			
-			$.post('/dbconfig/ajax/delete', {ids:id},function(data){
+			$.post('/config/db/ajax/delete', {ids:id},function(data){
 				dialogInfo(data.message)
 				if (data.code) {
 					setTimeout(function(){ window.location.reload() }, 1000);

@@ -89,19 +89,17 @@ INSERT INTO `pms_permissions` VALUES ('1041', '1', '日志删除', 'log-delete',
 INSERT INTO `pms_permissions` VALUES ('1050', '1', '消息管理', 'message-manage', '/message/manage', '', '0', '0', '0');
 INSERT INTO `pms_permissions` VALUES ('1051', '1', '消息删除', 'message-delete', '/message/delete', '', '0', '0', '0');
 
+INSERT INTO `pms_permissions` VALUES ('1100', '2', '业务系统配置', 'config-business-manage', '/config/business/manage', '', '1', '1', '1');
+INSERT INTO `pms_permissions` VALUES ('1101', '2', '添加业务系统', 'config-business-add', '/config/business/add', '', '0', '0', '0');
+INSERT INTO `pms_permissions` VALUES ('1102', '2', '编辑业务系统', 'config-business-edit', '/config/business/edit', '', '0', '0', '0');
+INSERT INTO `pms_permissions` VALUES ('1103', '2', '删除业务系统', 'config-business-delete', '/config/business/delete', '', '0', '0', '0');
 
-INSERT INTO `pms_permissions` VALUES ('1100', '2', '业务系统配置', 'business-manage', '/business/manage', '', '1', '1', '1');
-INSERT INTO `pms_permissions` VALUES ('1101', '2', '添加业务系统', 'business-add', '/business/add', '', '0', '0', '0');
-INSERT INTO `pms_permissions` VALUES ('1102', '2', '编辑业务系统', 'business-edit', '/business/edit', '', '0', '0', '0');
-INSERT INTO `pms_permissions` VALUES ('1103', '2', '删除业务系统', 'business-delete', '/business/delete', '', '0', '0', '0');
+INSERT INTO `pms_permissions` VALUES ('1110', '2', '数据库配置', 'config-db-manage', '/config/db/manage', '', '1', '1', '2');
+INSERT INTO `pms_permissions` VALUES ('1111', '2', '添加数据库', 'config-db-add', '/config/db/add', '', '0', '0', '0');
+INSERT INTO `pms_permissions` VALUES ('1112', '2', '编辑数据库', 'config-db-edit', '/config/db/edit', '', '0', '0', '0');
+INSERT INTO `pms_permissions` VALUES ('1113', '2', '删除数据库', 'config-db-delete', '/config/db/delete', '', '0', '0', '0');
 
-
-INSERT INTO `pms_permissions` VALUES ('1110', '2', '数据库配置', 'dbconfig-manage', '/dbconfig/manage', '', '1', '1', '2');
-INSERT INTO `pms_permissions` VALUES ('1111', '2', '添加数据库', 'dbconfig-add', '/dbconfig/add', '', '0', '0', '0');
-INSERT INTO `pms_permissions` VALUES ('1112', '2', '编辑数据库', 'dbconfig-edit', '/dbconfig/edit', '', '0', '0', '0');
-INSERT INTO `pms_permissions` VALUES ('1113', '2', '删除数据库', 'dbconfig-delete', '/dbconfig/delete', '', '0', '0', '0');
-
-INSERT INTO `pms_permissions` VALUES ('1120', '2', '容灾配置', 'config-recover', '/config/disaster/manage', '', '1', '1', '3');
+INSERT INTO `pms_permissions` VALUES ('1120', '2', '容灾配置', 'config-disaster-manage', '/config/disaster/manage', '', '1', '1', '3');
 
 INSERT INTO `pms_permissions` VALUES ('1130', '3', '容灾切换', 'oper-switch-manage', '/operation/disaster_switch/manage', '', '1', '1', '1');
 INSERT INTO `pms_permissions` VALUES ('1131', '3', '容灾切换', 'oper-switch-view', '/operation/disaster_switch/view', '', '0', '0', '1');

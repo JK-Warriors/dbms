@@ -2,10 +2,10 @@
  
  <div class="header-menu">
    <li {{if or (eq "/" .url_first_part) (eq "" .url_first_part)}}class="active"{{end}}><a href="/">首页</a></li>
-   <li {{if eq "/config" .url_first_part}}class="active"{{end}}><a href="/business/manage">配置</a></li>
+   <li {{if eq "/config" .url_first_part}}class="active"{{end}}><a href="/config/business/manage">配置</a></li>
    <li {{if eq "/business" .url_first_part}}class="active"{{end}}><a href="/business/manage">业务系统</a></li>
    <li {{if eq "/operation" .url_first_part}}class="active"{{end}}><a href="/operation/disaster_switch/manage">操作</a></li>
-   <li {{if eq "/screen" .url_first_part}}class="active"{{end}}><a href="/operation/disaster_switch">大屏</a></li>
+   <li {{if eq "/screen" .url_first_part}}class="active"{{end}}><a href="/screen/manage">大屏</a></li>
    <li {{if eq "/system" .url_first_part}}class="active"{{end}}><a href="/user/manage">系统管理</a></li>
  </div>
  <!--toggle button end-->

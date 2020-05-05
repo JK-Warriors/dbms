@@ -19,7 +19,7 @@ type ManageDBConfigController struct {
 
 func (this *ManageDBConfigController) Get() {
 	//权限检测
-	if !strings.Contains(this.GetSession("userPermission").(string), "dbconfig-manage") {
+	if !strings.Contains(this.GetSession("userPermission").(string), "config-db-manage") {
 		this.Abort("401")
 	}
 
@@ -61,7 +61,7 @@ type AddDBConfigController struct {
 
 func (this *AddDBConfigController) Get() {
 	//权限检测
-	if !strings.Contains(this.GetSession("userPermission").(string), "dbconfig-add") {
+	if !strings.Contains(this.GetSession("userPermission").(string), "config-db-add") {
 		this.Abort("401")
 	}
 
@@ -76,7 +76,7 @@ func (this *AddDBConfigController) Get() {
 
 func (this *AddDBConfigController) Post() {
 	//权限检测
-	if !strings.Contains(this.GetSession("userPermission").(string), "dbconfig-add") {
+	if !strings.Contains(this.GetSession("userPermission").(string), "config-db-add") {
 		this.Data["json"] = map[string]interface{}{"code": 0, "message": "无权新增"}
 		this.ServeJSON()
 		return
@@ -156,7 +156,7 @@ type EditDBConfigController struct {
 
 func (this *EditDBConfigController) Get() {
 	//权限检测
-	if !strings.Contains(this.GetSession("userPermission").(string), "dbconfig-edit") {
+	if !strings.Contains(this.GetSession("userPermission").(string), "config-db-edit") {
 		this.Abort("401")
 	}
 	idstr := this.Ctx.Input.Param(":id")
@@ -175,7 +175,7 @@ func (this *EditDBConfigController) Get() {
 
 func (this *EditDBConfigController) Post() {
 	//权限检测
-	if !strings.Contains(this.GetSession("userPermission").(string), "dbconfig-edit") {
+	if !strings.Contains(this.GetSession("userPermission").(string), "config-db-edit") {
 		this.Data["json"] = map[string]interface{}{"code": 0, "message": "无权编辑"}
 		this.ServeJSON()
 		return
@@ -262,7 +262,7 @@ type AjaxStatusDBConfigController struct {
 
 func (this *AjaxStatusDBConfigController) Post() {
 	//权限检测
-	if !strings.Contains(this.GetSession("userPermission").(string), "dbconfig-edit") {
+	if !strings.Contains(this.GetSession("userPermission").(string), "config-db-edit") {
 		this.Data["json"] = map[string]interface{}{"code": 0, "message": "无权设置"}
 		this.ServeJSON()
 		return
@@ -297,7 +297,7 @@ type AjaxDeleteDBConfigController struct {
 
 func (this *AjaxDeleteDBConfigController) Post() {
 	//权限检测
-	if !strings.Contains(this.GetSession("userPermission").(string), "dbconfig-delete") {
+	if !strings.Contains(this.GetSession("userPermission").(string), "config-db-delete") {
 		this.Data["json"] = map[string]interface{}{"code": 0, "message": "无权删除"}
 		this.ServeJSON()
 		return

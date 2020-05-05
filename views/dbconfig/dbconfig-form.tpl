@@ -17,11 +17,11 @@
     <div class="page-heading">
       <!-- <h3> 组织管理 {{template "users/nav.tpl" .}}</h3>-->
       <ul class="breadcrumb pull-left">
-        <li> <a href="/dbconfig/manage">业务配置</a> </li>
-        <li> <a href="/dbconfig/manage">数据库管理</a> </li>
+        <li> <a href="/config/business/manage">配置</a> </li>
+        <li> <a href="/config/db/manage">数据库配置</a> </li>
         <li class="active"> {{if gt .dbconf.Id 0}}编辑{{else}}新增{{end}}数据库 </li>
       </ul>
-      <div class="pull-right"><a href="/dbconfig/add" class="btn btn-success">+添加数据库</a></div>
+      <div class="pull-right"><a href="/config/db/add" class="btn btn-success">+添加数据库</a></div>
     </div>
     <!-- page heading end-->
     <!--body wrapper start-->
@@ -194,7 +194,7 @@
                 success:function(data) {
                     dialogInfo(data.message)
                     if (data.code) {
-                       		setTimeout(function(){window.location.href="/dbconfig/manage"}, 1000);
+                       		setTimeout(function(){window.location.href="/config/db/manage"}, 1000);
                     } else {
                         setTimeout(function(){ $('#dialogInfo').modal('hide'); }, 1000);
                     }

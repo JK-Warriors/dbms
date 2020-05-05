@@ -64,17 +64,17 @@ func init() {
 	beego.Router("/log/ajax/delete", &logs.AjaxDeleteLogController{})
 
 	//业务系统配置
-	beego.Router("/business/manage", &business.ManageBusinessController{})
-	beego.Router("/business/add", &business.AddBusinessController{})
-	beego.Router("/business/edit", &business.EditBusinessController{})
-	beego.Router("/business/ajax/delete", &business.AjaxDeleteBusinessController{})
+	beego.Router("/config/business/manage", &business.ManageBusinessController{})
+	beego.Router("/config/business/add", &business.AddBusinessController{})
+	beego.Router("/config/business/edit", &business.EditBusinessController{})
+	beego.Router("/config/business/ajax/delete", &business.AjaxDeleteBusinessController{})
 
 	//数据库配置
-	beego.Router("/dbconfig/manage", &dbconfig.ManageDBConfigController{})
-	beego.Router("/dbconfig/add", &dbconfig.AddDBConfigController{})
-	beego.Router("/dbconfig/edit/:id", &dbconfig.EditDBConfigController{})
-	beego.Router("/dbconfig/ajax/status", &dbconfig.AjaxStatusDBConfigController{})
-	beego.Router("/dbconfig/ajax/delete", &dbconfig.AjaxDeleteDBConfigController{})
+	beego.Router("/config/db/manage", &dbconfig.ManageDBConfigController{})
+	beego.Router("/config/db/add", &dbconfig.AddDBConfigController{})
+	beego.Router("/config/db/edit/:id", &dbconfig.EditDBConfigController{})
+	beego.Router("/config/db/ajax/status", &dbconfig.AjaxStatusDBConfigController{})
+	beego.Router("/config/db/ajax/delete", &dbconfig.AjaxDeleteDBConfigController{})
 
 	//容灾配置
 	beego.Router("/config/disaster/manage", &disaster_config.ManageDisasterController{})

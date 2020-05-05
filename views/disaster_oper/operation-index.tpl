@@ -36,10 +36,10 @@
               <div class="search-form">
                 <div class="form-inline">
                   <div class="form-group">
-                    <form action="/business/manage" method="get">
+                    <form action="/config/business/manage" method="get">
                     <input type="text" name="search_name" placeholder="请输入名称" class="form-control" value="{{.condArr.search_name}}"/>
                     <button class="btn btn-primary" type="submit"> <i class="fa fa-search"></i> 搜索 </button>
-                    <a href="/business/manage" class="btn btn-default" type="submit"> <i class="fa fa-reset"></i> 重置 </a>
+                    <a href="/config/business/manage" class="btn btn-default" type="submit"> <i class="fa fa-reset"></i> 重置 </a>
                     </form>
                   </div>
                 </div>
@@ -166,7 +166,7 @@
       }, function(index){
         layer.close(index);
         
-        $.post('/business/ajax/delete', {ids:id},function(data){
+        $.post('/config/business/ajax/delete', {ids:id},function(data){
           dialogInfo(data.message)
           if (data.code) {
             setTimeout(function(){ window.location.reload() }, 1000);
@@ -190,9 +190,9 @@
         submitHandler:function(form) {
             var id = $("#bs_id").val()
             if(id == ""){
-                target_url = "/business/add";
+                target_url = "/config/business/add";
             }else{
-                target_url = "/business/edit";
+                target_url = "/config/business/edit";
             }
             $(form).ajaxSubmit({
                 type:'POST',
@@ -201,7 +201,7 @@
                 success:function(data) {
                     dialogInfo(data.message)
                     if (data.code) {
-                       setTimeout(function(){window.location.href="/business/manage"}, 1000);
+                       setTimeout(function(){window.location.href="/config/business/manage"}, 1000);
                     } else {
                        setTimeout(function(){ $('#dialogInfo').modal('hide'); }, 1000);
                     }

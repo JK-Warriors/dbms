@@ -20,7 +20,7 @@ type ManageDisasterController struct {
 
 func (this *ManageDisasterController) Get() {
 	//权限检测
-	if !strings.Contains(this.GetSession("userPermission").(string), "business-manage") {
+	if !strings.Contains(this.GetSession("userPermission").(string), "config-disaster-manage") {
 		this.Abort("401")
 	}
 
@@ -58,7 +58,7 @@ type EditDisasterController struct {
 
 func (this *EditDisasterController) Get() {
 	//权限检测
-	if !strings.Contains(this.GetSession("userPermission").(string), "business-edit") {
+	if !strings.Contains(this.GetSession("userPermission").(string), "config-disaster-manage") {
 		this.Abort("401")
 	}
 	idstr := this.Ctx.Input.Param(":id")
@@ -85,7 +85,7 @@ func (this *EditDisasterController) Get() {
 
 func (this *EditDisasterController) Post() {
 	//权限检测
-	if !strings.Contains(this.GetSession("userPermission").(string), "business-edit") {
+	if !strings.Contains(this.GetSession("userPermission").(string), "config-disaster-manage") {
 		this.Data["json"] = map[string]interface{}{"code": 0, "message": "无权编辑"}
 		this.ServeJSON()
 		return

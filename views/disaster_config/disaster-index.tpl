@@ -25,8 +25,8 @@
     <div class="page-heading">
       <!--<h3> 组织管理 {{template "users/nav.tpl" .}}</h3>-->
       <ul class="breadcrumb pull-left">
-        <li> <a href="/dbconfig/manage">数据库配置</a> </li>
-        <li class="active"> 数据库列表 </li>
+        <li> <a href="/config/business/manage">配置</a> </li>
+        <li class="active"> 容灾配置 </li>
       </ul>
     </div>
     <!-- page heading end-->
@@ -112,7 +112,7 @@
     	var that = $(this);
     	var status = that.attr('data-status')
     	var id = that.attr('data-id');
-      $.post('/dbconfig/ajax/status', { status: status, id: id },function(data){
+      $.post('/config/db/ajax/status', { status: status, id: id },function(data){
         dialogInfo(data.message)
         if (data.code) {
           that.attr('data-status', status == 2 ? 1 : 2).text(status == 2 ? '激活' : '禁用').parents('td').prev('td').text(status == 2 ? '禁用' : '激活');
@@ -133,7 +133,7 @@
 		}, function(index){
 			layer.close(index);
 			
-			$.post('/dbconfig/ajax/delete', {ids:id},function(data){
+			$.post('/config/db/ajax/delete', {ids:id},function(data){
 				dialogInfo(data.message)
 				if (data.code) {
 					setTimeout(function(){ window.location.reload() }, 1000);
