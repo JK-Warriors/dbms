@@ -1,15 +1,19 @@
 package dbconfig
 
 import (
+	"database/sql"
 	"fmt"
 	"opms/controllers"
 	. "opms/models/business"
 	. "opms/models/dbconfig"
+	"opms/utils"
 	"strconv"
 	"strings"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/utils/pagination"
+	_ "github.com/denisenkom/go-mssqldb"
+	_ "github.com/mattn/go-oci8"
 )
 
 //库管理
@@ -317,4 +321,108 @@ func (this *AjaxDeleteDBConfigController) Post() {
 		this.Data["json"] = map[string]interface{}{"code": 0, "message": "删除失败"}
 	}
 	this.ServeJSON()
+}
+
+type AjaxConnectDBConfigController struct {
+	controllers.BaseController
+}
+
+func (this *AjaxConnectDBConfigController) Post() {
+	//权限检测
+	db_type := this.GetString("db_type")
+	host := this.GetString("host")
+	port := this.GetString("port")
+	username := this.GetString("username")
+	password := this.GetString("password")
+	inst_name := this.GetString("inst_name")
+	db_name := this.GetString("db_name")
+
+	var err error
+
+	if db_type == "1" {
+		err = CheckOracleConnect(host, port, inst_name, username, password)
+	} else if db_type == "2" {
+		err = CheckMysqlConnect(host, port, db_name, username, password)
+	} else if db_type == "3" {
+		err = CheckSqlserverConnect(host, port, inst_name, db_name, username, password)
+	}
+
+	//utils.LogDebug(err)
+	if err == nil {
+		this.Data["json"] = map[string]interface{}{"code": 1, "message": "测试连接成功"}
+	} else {
+		this.Data["json"] = map[string]interface{}{"code": 0, "message": "测试连接失败: " + err.Error()}
+	}
+	this.ServeJSON()
+}
+
+func CheckOracleConnect(host string, port string, inst_name string, username string, password string) error {
+	con_str := username + "/" + password + "@" + host + ":" + port + "/" + inst_name + "?timeout=5s&readTimeout=6s"
+	//db, err := sql.Open("oci8", "sys/oracle@192.168.133.40:1521/orcl?as=sysdba")
+	db, err := sql.Open("oci8", con_str)
+	defer db.Close()
+
+	_, err = db.Query("select 1 from dual")
+
+	//err_str := fmt.Sprintf("%s", err)
+
+	//ORA-28009: connection as SYS should be as SYSDBA or SYSOPER
+	if strings.Contains(err.Error(), "ORA-28009") || strings.Contains(err.Error(), "driver: bad connection") {
+		con_str = username + "/" + password + "@" + host + ":" + port + "/" + inst_name + "?as=sysdba&timeout=5s&readTimeout=6s"
+		db, err = sql.Open("oci8", con_str)
+		defer db.Close()
+
+		_, err = db.Query("select 1 from dual")
+	}
+
+	if err != nil {
+		utils.LogDebug("Open Connection failed: " + err.Error())
+	}
+
+	return err
+}
+
+func CheckMysqlConnect(host string, port string, db_name string, username string, password string) error {
+	//con_str := "root:Aa123456@tcp(192.168.0.101:3306)/?timeout=5s&readTimeout=6s"
+	con_str := username + ":" + password + "@tcp(" + host + ":" + port + ")/" + db_name + "?timeout=5s&readTimeout=6s"
+	db, err := sql.Open("mysql", con_str)
+	defer db.Close()
+
+	_, err = db.Query("select 1")
+	if err != nil {
+		utils.LogDebug("Open Connection failed: " + err.Error())
+	}
+
+	return err
+}
+
+func CheckSqlserverConnect(host string, port string, inst_name string, db_name string, username string, password string) error {
+	//连接字符串
+	con_str := fmt.Sprintf("server=%s;port%s;database=%s;user id=%s;password=%s", host, port, db_name, username, password)
+
+	//建立连接
+	conn, err := sql.Open("mssql", con_str)
+	if err != nil {
+		utils.LogDebug("Open Connection failed: " + err.Error())
+		return err
+	}
+	defer conn.Close()
+
+	//产生查询语句的Statement
+	stmt, err := conn.Prepare("select 1")
+	if err != nil {
+		utils.LogDebug("Open Connection failed: " + err.Error())
+		return err
+	}
+	defer stmt.Close()
+
+	//通过Statement执行查询
+	rows, err := stmt.Query()
+	defer rows.Close()
+
+	if err != nil {
+		utils.LogDebug("Open Connection failed: " + err.Error())
+	}
+
+	return err
 }

@@ -58,19 +58,19 @@
                 <div class="form-group">
                   <label class="col-sm-2 col-sm-2 control-label"><span>*</span>主机IP</label>
                   <div class="col-sm-10">
-                    <input type="text" name="host"  value="{{.dbconf.Host}}" class="form-control">
+                    <input type="text" id="host" name="host"  value="{{.dbconf.Host}}" class="form-control">
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 col-sm-2 control-label"><span>*</span>端口</label>
                   <div class="col-sm-10">
-                    <input type="text" name="port"  value="{{.dbconf.Port}}" class="form-control">
+                    <input type="text" id="port" name="port"  value="{{.dbconf.Port}}" class="form-control">
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 col-sm-2 control-label"><span>*</span>别名</label>
                   <div class="col-sm-10">
-                    <input type="text" name="alias"  value="{{.dbconf.Alias}}" class="form-control">
+                    <input type="text" id="alias" name="alias"  value="{{.dbconf.Alias}}" class="form-control">
                   </div>
                 </div>
                 <div id="div_inst_name" class="form-group">
@@ -88,13 +88,13 @@
                 <div class="form-group">
                   <label class="col-sm-2 col-sm-2 control-label"><span>*</span>用户名</label>
                   <div class="col-sm-10">
-                    <input type="text" name="username"  value="{{.dbconf.Username}}" class="form-control" placeholder="请填写用户名">
+                    <input type="text" id="username" name="username"  value="{{.dbconf.Username}}" class="form-control" placeholder="请填写用户名">
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 col-sm-2 control-label"><span>*</span>密码</label>
                   <div class="col-sm-10">
-                    <input type="password" name="password"  value="{{.dbconf.Password}}" class="form-control" placeholder="请填写密码">
+                    <input type="password" id="password" name="password"  value="{{.dbconf.Password}}" class="form-control" placeholder="请填写密码">
                   </div>
                 </div>
                 <div class="form-group">
@@ -111,6 +111,7 @@
                   <label class="col-lg-2 col-sm-2 control-label"></label>
                   <div class="col-lg-10">
                     <input type="hidden" id="id" name="id" value="{{.dbconf.Id}}">
+                    <button type="button" onclick="checkConnect()" class="btn btn-primary">连接测试</button>
                     <button type="submit" class="btn btn-primary">提 交</button>
                   </div>
                 </div>
@@ -152,7 +153,6 @@
 
         id =  {{.dbconf.Id}};
         if(id && id > 0){
-            $('#db_type').attr("disabled",true);
             $('#bs_id').attr("disabled",true);
         }
     });  
@@ -176,7 +176,31 @@
             $("#db_name").attr("value","");
         }
     });
-       
+
+    
+    function checkConnect(){
+        var db_type = $("#db_type").val();
+        var host = $("#host").val();
+        var port = $("#port").val();
+        var inst_name = $("#inst_name").val();
+        var db_name = $("#db_name").val();
+        var username = $("#username").val();
+        var password = $("#password").val();
+        
+        $.ajax({url: "/config/db/ajax/connect",
+                type: "POST",
+								data: {"db_type":db_type, "host":host,"port":port,"inst_name":inst_name,"db_name":db_name,"username":username,"password":password,},
+                success: function (data) {
+                    dialogInfo(data.message)
+                    setTimeout(function(){ $('#dialogInfo').modal('hide'); }, 1000);
+                    if (data.code) {
+                    }
+                    else {
+                    }
+                }
+        });
+    }
+
     $('#dbconfig-form').validate({
         ignore:'',        
 		    rules : {

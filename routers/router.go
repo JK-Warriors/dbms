@@ -75,6 +75,7 @@ func init() {
 	beego.Router("/config/db/edit/:id", &dbconfig.EditDBConfigController{})
 	beego.Router("/config/db/ajax/status", &dbconfig.AjaxStatusDBConfigController{})
 	beego.Router("/config/db/ajax/delete", &dbconfig.AjaxDeleteDBConfigController{})
+	beego.Router("/config/db/ajax/connect", &dbconfig.AjaxConnectDBConfigController{})
 
 	//容灾配置
 	beego.Router("/config/disaster/manage", &disaster_config.ManageDisasterController{})
