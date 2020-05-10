@@ -4,7 +4,7 @@ Navicat MySQL Data Transfer
 Source Server         : localhost
 Source Server Version : 50505
 Source Host           : localhost:3306
-Source Database       : aiopms
+Source Database       : dbms
 
 Target Server Type    : MYSQL
 Target Server Version : 50505
@@ -64,7 +64,7 @@ CREATE TABLE `pms_permissions` (
 INSERT INTO `pms_permissions` VALUES ('0', '0', '根节点', 'root', '/root', '', '0', '0', '0');
 INSERT INTO `pms_permissions` VALUES ('1', '0', '系统管理', 'system', '/system', '', '1', '0', '1');
 INSERT INTO `pms_permissions` VALUES ('2', '0', '业务配置', 'config', '/config', '', '1', '0', '2');
-INSERT INTO `pms_permissions` VALUES ('3', '0', '操作', 'operation', '/operation', '', '1', '0', '3');
+INSERT INTO `pms_permissions` VALUES ('3', '0', '操作', 'maintenance', '/maintenance', '', '1', '0', '3');
 
 INSERT INTO `pms_permissions` VALUES ('1010', '1', '用户管理', 'user-manage', '/user/manage', 'fa-user', '1', '1', '0');
 INSERT INTO `pms_permissions` VALUES ('1011', '1', '添加用户', 'user-add', '/user/add', null, '0', '0', '0');
@@ -89,23 +89,19 @@ INSERT INTO `pms_permissions` VALUES ('1041', '1', '日志删除', 'log-delete',
 INSERT INTO `pms_permissions` VALUES ('1050', '1', '消息管理', 'message-manage', '/message/manage', '', '0', '0', '0');
 INSERT INTO `pms_permissions` VALUES ('1051', '1', '消息删除', 'message-delete', '/message/delete', '', '0', '0', '0');
 
-INSERT INTO `pms_permissions` VALUES ('1100', '2', '业务系统配置', 'config-business-manage', '/config/business/manage', '', '1', '1', '1');
-INSERT INTO `pms_permissions` VALUES ('1101', '2', '添加业务系统', 'config-business-add', '/config/business/add', '', '0', '0', '0');
-INSERT INTO `pms_permissions` VALUES ('1102', '2', '编辑业务系统', 'config-business-edit', '/config/business/edit', '', '0', '0', '0');
-INSERT INTO `pms_permissions` VALUES ('1103', '2', '删除业务系统', 'config-business-delete', '/config/business/delete', '', '0', '0', '0');
+INSERT INTO `pms_permissions` VALUES ('1100', '2', '分组管理', 'config-group-manage', '/config/group/manage', '', '1', '1', '1');
+INSERT INTO `pms_permissions` VALUES ('1101', '2', '添加分组', 'config-group-add', '/config/group/add', '', '0', '0', '0');
+INSERT INTO `pms_permissions` VALUES ('1102', '2', '编辑分组', 'config-group-edit', '/config/group/edit', '', '0', '0', '0');
+INSERT INTO `pms_permissions` VALUES ('1103', '2', '删除分组', 'config-group-delete', '/config/group/delete', '', '0', '0', '0');
 
 INSERT INTO `pms_permissions` VALUES ('1110', '2', '数据库配置', 'config-db-manage', '/config/db/manage', '', '1', '1', '2');
 INSERT INTO `pms_permissions` VALUES ('1111', '2', '添加数据库', 'config-db-add', '/config/db/add', '', '0', '0', '0');
 INSERT INTO `pms_permissions` VALUES ('1112', '2', '编辑数据库', 'config-db-edit', '/config/db/edit', '', '0', '0', '0');
 INSERT INTO `pms_permissions` VALUES ('1113', '2', '删除数据库', 'config-db-delete', '/config/db/delete', '', '0', '0', '0');
 
-INSERT INTO `pms_permissions` VALUES ('1120', '2', '容灾配置', 'config-disaster-manage', '/config/disaster/manage', '', '1', '1', '3');
+INSERT INTO `pms_permissions` VALUES ('1120', '2', '节点配置', 'config-node-manage', '/config/node/manage', '', '1', '1', '3');
 
-INSERT INTO `pms_permissions` VALUES ('1130', '3', '容灾切换', 'oper-switch-manage', '/operation/disaster_switch/manage', '', '1', '1', '1');
-INSERT INTO `pms_permissions` VALUES ('1131', '3', '容灾切换', 'oper-switch-view', '/operation/disaster_switch/view', '', '0', '0', '1');
-INSERT INTO `pms_permissions` VALUES ('1132', '3', '容灾激活', 'oper-active-manage', '/operation/disaster_active/manage', '', '1', '1', '2');
-INSERT INTO `pms_permissions` VALUES ('1133', '3', '容灾同步', 'oper-sync-manage', '/operation/disaster_sync/manage', '', '1', '1', '3');
-INSERT INTO `pms_permissions` VALUES ('1134', '3', '容灾快照', 'oper-snapshot-manage', '/operation/disaster_snapshot/manage', '', '1', '1', '4');
+INSERT INTO `pms_permissions` VALUES ('1130', '3', '数据库巡检', 'mt-healthcheck-manage', '/maintenance/healthcheck/manage', '', '1', '1', '1');
 -- ----------------------------
 -- Table structure for pms_role_permission
 -- ----------------------------
@@ -255,7 +251,7 @@ CREATE TABLE `pms_messages` (
 -- Records of pms_messages
 -- ----------------------------
 INSERT INTO `pms_messages` VALUES ('66618325785907200', '1461312703628858832', '1469024587469707428', '4', '31', '去审批处理', '/leave/approval/66618286464307200', '1', '1490685934');
-INSERT INTO `pms_messages` VALUES ('66626417378463744', '1461312703628858832', '1461312703628858832', '1', '11', 'OPMS 1.2 版本更新发布', '/knowledge/66618679508340736', '1', '1490687863');
+INSERT INTO `pms_messages` VALUES ('66626417378463744', '1461312703628858832', '1461312703628858832', '1', '11', 'DBMS 1.2 版本更新发布', '/knowledge/66618679508340736', '1', '1490687863');
 INSERT INTO `pms_messages` VALUES ('66639445431947264', '1461312703628858832', '1461312703628858832', '1', '12', '油菜花', '/album/66621262012616704', '1', '1490690969');
 
 
@@ -292,7 +288,7 @@ CREATE TABLE `pms_db_config` (
   `db_name` varchar(50) DEFAULT '' COMMENT '数据库名',
   `username` varchar(30) DEFAULT '' COMMENT '用户名',
   `password` varchar(255) DEFAULT '' COMMENT '密码',
-  `bs_id` int(10) DEFAULT NULL COMMENT '业务系统ID',
+  `group_id` int(10) DEFAULT NULL COMMENT '组ID',
   `role` tinyint(2) DEFAULT 1 COMMENT '1：主；2: 备',
   `status` tinyint(2) DEFAULT 1 COMMENT '1: 激活；0：禁用',
   `is_delete` tinyint(2) DEFAULT 0 COMMENT '1: 删除；0：未删除',
@@ -306,18 +302,20 @@ CREATE TABLE `pms_db_config` (
 
 
 -- -----------------------------------------------------------------------------
--- Table structure for pms_business
+-- Table structure for pms_group
 -- -----------------------------------------------------------------------------
-DROP TABLE IF EXISTS `pms_business`;
-CREATE TABLE `pms_business` (
+DROP TABLE IF EXISTS `pms_group`;
+CREATE TABLE `pms_group` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `bs_name` varchar(50) DEFAULT '' COMMENT '业务系统名',
+  `group_name` varchar(50) DEFAULT '' COMMENT '组名',
   `is_delete` tinyint(2) DEFAULT 0 COMMENT '1: 删除；0：未删除',
   `created` int(10) DEFAULT NULL COMMENT '创建时间',
   `updated` int(10) DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`),
-  KEY `bs_name` (`bs_name`)
-)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='业务系统配置表';
+  KEY `group_name` (`group_name`)
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='分组表';
+
+insert into pms_group(id, group_name) values(1, '默认分组');
 
 
 -- -----------------------------------------------------------------------------

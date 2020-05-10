@@ -5,17 +5,19 @@ import (
 	//"crypto/tls"
 	"database/sql"
 	"fmt"
+
 	//"io/ioutil"
 	//"net/http"
 	"os"
 	"path"
 	"strconv"
+
 	//"strings"
 	"time"
 	//"bytes"
 	//"reflect"
-	"opms/agent/mysqld_exporter/collector"
-	"opms/agent/mysqld_exporter/com"
+	"dbms/agent/mysqld_exporter/collector"
+	"dbms/agent/mysqld_exporter/com"
 
 	_ "github.com/go-sql-driver/mysql"
 	//"github.com/percona/exporter_shared"
@@ -23,12 +25,12 @@ import (
 	//"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/prometheus/common/log"
 	"github.com/prometheus/common/version"
+
 	//"github.com/prometheus/common/expfmt"
 	"gopkg.in/alecthomas/kingpin.v2"
 	//"gopkg.in/ini.v1"
 	//"gopkg.in/yaml.v2"
 
-	
 	"github.com/pythonsite/yamlConfig"
 )
 
@@ -91,7 +93,6 @@ var (
 
 	dsn string
 )
-
 
 // scrapers lists all possible collection methods and if they should be enabled by default.
 var scrapers = map[collector.Scraper]bool{
@@ -167,31 +168,29 @@ var scrapersLr = map[collector.Scraper]struct{}{
 	collector.ScrapeCustomQuery{Resolution: collector.LR}: {},
 }
 
- 
 type ServerConfig struct {
-	Host 		string
-	Port  		int
-	Username  	string
-	Password  	string
-	Dbname  	string
-	Timeout  	int
+	Host     string
+	Port     int
+	Username string
+	Password string
+	Dbname   string
+	Timeout  int
 }
 
+func GetDsn() string {
 
-func GetDsn() string{
-	
-    currdir, _ := os.Getwd()
+	currdir, _ := os.Getwd()
 	yamlFile := currdir + "/etc/config.yml"
 
-    config := yamlConfig.ConfigEngine{}
-    err := config.Load(yamlFile)
+	config := yamlConfig.ConfigEngine{}
+	err := config.Load(yamlFile)
 	if err != nil {
 		log.Fatalln("Config load error:", err)
 	}
 
 	serverconf := ServerConfig{}
-    res := config.GetStruct("mysql",&serverconf)
-    //fmt.Printf("%v",res)
+	res := config.GetStruct("mysql", &serverconf)
+	//fmt.Printf("%v",res)
 	log.Debugln(res)
 	host := serverconf.Host
 	port := strconv.Itoa(serverconf.Port)
@@ -204,7 +203,6 @@ func GetDsn() string{
 	log.Debugln(dsn)
 	return dsn
 }
-
 
 func enabledScrapers(scraperFlags map[collector.Scraper]*bool) (all, hr, mr, lr []collector.Scraper) {
 	for scraper, enabled := range scraperFlags {
@@ -241,155 +239,148 @@ func newDB(dsn string) (*sql.DB, error) {
 	return db, nil
 }
 
-
 func init() {
 	prometheus.MustRegister(version.NewCollector("mysqld_exporter"))
 }
 
 func newHandler(maindb *sql.DB, dbid int, dbinst *sql.DB, metrics collector.Metrics, scrapers []collector.Scraper, defaultGatherer bool) {
-		filteredScrapers := scrapers
+	filteredScrapers := scrapers
 
-		//ctx := r.Context()
-		ctx, _ := context.WithCancel(context.Background())
+	//ctx := r.Context()
+	ctx, _ := context.WithCancel(context.Background())
 
-		if dbinst == nil || maindb == nil {
-			log.Fatalln("Error opening connection to database: ", strconv.Itoa(dbid))
-			return
-		}
+	if dbinst == nil || maindb == nil {
+		log.Fatalln("Error opening connection to database: ", strconv.Itoa(dbid))
+		return
+	}
 
-		//var err error
-		rows, err := maindb.Query("select key_, label, item_id, value_type from pms_items where obj_id = ?", dbid)
+	//var err error
+	rows, err := maindb.Query("select key_, label, item_id, value_type from pms_items where obj_id = ?", dbid)
+	if err != nil {
+		log.Infoln("Get item template error: ", err)
+	}
+
+	registry := prometheus.NewRegistry()
+	registry.MustRegister(collector.New(ctx, dbinst, metrics, filteredScrapers))
+
+	//count,_ :=prometheus.GetMetricWith("")
+
+	gatherers := prometheus.Gatherers{}
+	if defaultGatherer {
+		gatherers = append(gatherers, prometheus.DefaultGatherer)
+	}
+	gatherers = append(gatherers, registry)
+
+	gathering, err := gatherers.Gather()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	m0 := make(map[string]int)
+	m1 := make(map[string]int)
+	var (
+		key        string
+		label      string
+		item_id    int
+		value_type int
+	)
+	var key_label string
+	for rows.Next() {
+		err = rows.Scan(&key, &label, &item_id, &value_type)
 		if err != nil {
-			log.Infoln("Get item template error: ", err)
+			log.Infoln(err)
 		}
+		key_label = key + "_" + label
+		m0[key_label] = item_id
+		m1[key_label] = value_type
+	}
+	defer rows.Close()
 
-		registry := prometheus.NewRegistry()
-		registry.MustRegister(collector.New(ctx, dbinst, metrics, filteredScrapers))
+	gather_time := time.Now().Unix()
+	fmt.Printf("gather_time: %d\n", gather_time)
+	//out := &bytes.Buffer{}
+	for _, mf := range gathering {
+		//fmt.Println(reflect.TypeOf(mf))   type: io_prometheus_client
+		//fmt.Print(mf.GetName() + "\n")
+		//fmt.Print(mf.GetHelp() + "\n")
+		//fmt.Print(mf.GetMetric())
+		//fmt.Print("\n")
 
-		//count,_ :=prometheus.GetMetricWith("")
+		mfname := mf.GetName()
 
-		gatherers := prometheus.Gatherers{}
-		if defaultGatherer {
-			gatherers = append(gatherers, prometheus.DefaultGatherer)
-		}
-		gatherers = append(gatherers, registry)
+		//if mfname == "mysql_up" {
+		fmt.Print(mfname + "\n")
 
-		gathering, err := gatherers.Gather()
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
+		mr := mf.GetMetric()
+		for _, m := range mr {
+			// 获取LabelPair类型值
+			ml := m.GetLabel()
+			var lvalue string
+			for _, mli := range ml {
+				//lname := mli.GetName()
+				lvalue = mli.GetValue()
 
-
-		m0 := make(map[string]int)
-		m1 := make(map[string]int)
-		var(key string
-			label string
-			item_id	int
-			value_type int
-		)
-		var key_label string
-		for rows.Next() { 
-			err = rows.Scan(&key, &label, &item_id, &value_type)
-			if err != nil {
-				log.Infoln(err)
-			}
-			key_label = key + "_" + label
-			m0[key_label] = item_id
-			m1[key_label] = value_type
-		}
-		defer rows.Close()
-
-		
-		gather_time := time.Now().Unix()
-		fmt.Printf("gather_time: %d\n",gather_time)
-		//out := &bytes.Buffer{}
-		for _, mf := range gathering {
-			//fmt.Println(reflect.TypeOf(mf))   type: io_prometheus_client
-			//fmt.Print(mf.GetName() + "\n")
-			//fmt.Print(mf.GetHelp() + "\n")
-			//fmt.Print(mf.GetMetric())
-			//fmt.Print("\n")
-
-			mfname :=  mf.GetName()
-
-
-			//if mfname == "mysql_up" {
-			fmt.Print(mfname + "\n")
-			
-			mr := mf.GetMetric()
-			for _,m := range mr{
-				// 获取LabelPair类型值
-				ml := m.GetLabel()
-				var lvalue string
-				for _,mli := range ml{
-					//lname := mli.GetName()
-					lvalue = mli.GetValue()
-
-					//fmt.Print(lname + "\n")
-					fmt.Print(lvalue + "\n")
-				}
-
-				k_label := mfname + "_" + lvalue
-				fmt.Print("key_label: " + k_label + "\n")
-				itemid := m0[k_label]
-				val_type := m1[k_label]
-				fmt.Print(itemid)
-				fmt.Print("\n")
-				fmt.Print(val_type)
-				fmt.Print("\n")
-
-				if itemid > 0 {
-					//根据值的类型取值
-					var mr_value float64
-					if val_type == 1 {
-						// 获取Counter类型值
-						mr_value = m.GetCounter().GetValue()
-						fmt.Printf("%f\n", mr_value)
-
-					}else if val_type == 2 {
-						// 获取Gauge类型值
-						mr_value = m.GetGauge().GetValue()
-						fmt.Printf("%f\n", mr_value)
-
-					}else if val_type == 3 {
-						// 获取Untyped类型值
-						mr_value = m.GetUntyped().GetValue()
-						fmt.Printf("%f\n", mr_value)
-					}else if val_type == 4 {
-						// 获取Histogram类型值
-						//mh := m.GetSummary()
-						//fmt.Print(mh)
-						//fmt.Print("\n")
-					}else if val_type == 5 {
-						// 获取Summary类型值
-						//ms := m.GetHistogram()
-						//fmt.Print(ms)
-						//fmt.Print("\n")
-					}
-
-					//保存结果到maindb中
-					_, err = maindb.Exec("INSERT INTO pms_item_data(itemid,time,value)VALUES (?,?,?)", itemid, gather_time, mr_value)
-					if err != nil{
-						fmt.Println("insert failed,",err)
-					}
-				}
-
+				//fmt.Print(lname + "\n")
+				fmt.Print(lvalue + "\n")
 			}
 
-			//}
-			
+			k_label := mfname + "_" + lvalue
+			fmt.Print("key_label: " + k_label + "\n")
+			itemid := m0[k_label]
+			val_type := m1[k_label]
+			fmt.Print(itemid)
+			fmt.Print("\n")
+			fmt.Print(val_type)
+			fmt.Print("\n")
 
-			// if _, err := expfmt.MetricFamilyToText(out, mf); err != nil {
-			// 	panic(err)
-			// }
+			if itemid > 0 {
+				//根据值的类型取值
+				var mr_value float64
+				if val_type == 1 {
+					// 获取Counter类型值
+					mr_value = m.GetCounter().GetValue()
+					fmt.Printf("%f\n", mr_value)
+
+				} else if val_type == 2 {
+					// 获取Gauge类型值
+					mr_value = m.GetGauge().GetValue()
+					fmt.Printf("%f\n", mr_value)
+
+				} else if val_type == 3 {
+					// 获取Untyped类型值
+					mr_value = m.GetUntyped().GetValue()
+					fmt.Printf("%f\n", mr_value)
+				} else if val_type == 4 {
+					// 获取Histogram类型值
+					//mh := m.GetSummary()
+					//fmt.Print(mh)
+					//fmt.Print("\n")
+				} else if val_type == 5 {
+					// 获取Summary类型值
+					//ms := m.GetHistogram()
+					//fmt.Print(ms)
+					//fmt.Print("\n")
+				}
+
+				//保存结果到maindb中
+				_, err = maindb.Exec("INSERT INTO pms_item_data(itemid,time,value)VALUES (?,?,?)", itemid, gather_time, mr_value)
+				if err != nil {
+					fmt.Println("insert failed,", err)
+				}
+			}
+
 		}
-		//fmt.Print(out.String())
-		fmt.Println("----------")
+
+		//}
+
+		// if _, err := expfmt.MetricFamilyToText(out, mf); err != nil {
+		// 	panic(err)
+		// }
+	}
+	//fmt.Print(out.String())
+	fmt.Println("----------")
 }
-
-
-
 
 func main() {
 	// Generate ON/OFF flags for all scrapers.
@@ -411,8 +402,6 @@ func main() {
 		os.Exit(0)
 	}
 
-	
-
 	log.Infoln("Starting mysqld_exporter", version.Info())
 	log.Infoln("Build context", version.BuildContext())
 
@@ -429,7 +418,7 @@ func main() {
 			log.Fatalln("Error opening connection to main database:", err)
 			return
 		}
-		
+
 		err = maindb.Ping()
 		if err != nil {
 			log.Fatalln("Error opening connection to main database:", err)
@@ -438,16 +427,16 @@ func main() {
 
 		defer maindb.Close()
 	}
-	
 
 	all, _, _, _ := enabledScrapers(scraperFlags)
 
-	var (dbid	int
-		 host	string
-		 port	int
-		 username string
-		 password string
-		 dbname string
+	var (
+		dbid     int
+		host     string
+		port     int
+		username string
+		password string
+		dbname   string
 	)
 	var mysql_dsn string
 	var dbinst *sql.DB
@@ -456,8 +445,8 @@ func main() {
 		rows, err := maindb.Query("select id, host, port, username, password, db_name from pms_db_config where db_type = 2 and status = 1 and is_delete = 0")
 		if err != nil {
 			log.Infoln("No mysql exists.")
-		}else{
-			for rows.Next() { 
+		} else {
+			for rows.Next() {
 				err = rows.Scan(&dbid, &host, &port, &username, &password, &dbname)
 				if err != nil {
 					log.Infoln(err)
@@ -469,7 +458,7 @@ func main() {
 					log.Errorln("Error opening connection to mysql instance: ", err)
 					com.ErrorConnection(dbid, maindb)
 					continue
-				}else{
+				} else {
 					err = dbinst.Ping()
 					if err != nil {
 						log.Errorln("Error opening connection to mysql instance: ", err)
@@ -484,13 +473,8 @@ func main() {
 		}
 		defer rows.Close()
 		log.Infoln("check mysql controller finished.")
-		
+
 		time.Sleep(1 * time.Minute)
 	}
-	
 
-
-	
-	
 }
-

@@ -1,15 +1,13 @@
 package roles
 
 import (
+	"dbms/controllers"
+	"dbms/models/roles"
+	"dbms/utils"
 	"fmt"
-	"opms/controllers"
-	"opms/utils"
-	"opms/models/roles"
 	"strconv"
 	"strings"
-
 	//"time"
-
 	//"github.com/astaxie/beego"
 	//"github.com/astaxie/beego/utils/pagination"
 )
@@ -37,7 +35,7 @@ func (this *ManageRolePermissionController) Get() {
 	var pstring = ""
 	var cstring = ""
 	for _, value := range permissions {
-		if (value.Parentid == 1) {
+		if value.Parentid == 1 {
 			pstring += fmt.Sprintf("%d", value.Id) + "||" + fmt.Sprintf("%d", value.Parentid) + "||" + value.Name + "||" + value.Url + ","
 		} else {
 			cstring += fmt.Sprintf("%d", value.Id) + "||" + fmt.Sprintf("%d", value.Parentid) + "||" + value.Name + "||" + value.Url + ","

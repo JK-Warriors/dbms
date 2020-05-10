@@ -1,11 +1,11 @@
 package logs
 
 import (
+	"dbms/controllers"
+	. "dbms/models/logs"
 	"fmt"
-	"opms/controllers"
-	. "opms/models/logs"
 
-	//"opms/utils"
+	//"dbms/utils"
 	//"strconv"
 	"strings"
 	//"time"

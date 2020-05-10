@@ -1,9 +1,9 @@
 package roles
 
 import (
+	"dbms/models"
+	"dbms/utils"
 	"fmt"
-	"opms/models"
-	"opms/utils"
 	"time"
 
 	"github.com/astaxie/beego"
@@ -76,7 +76,7 @@ func ListRole(condArr map[string]string, page int, offset int) (num int64, err e
 	return num, errs, role
 }
 
-func ListRoleAll()(num int64, err error, ops []Roles) {
+func ListRoleAll() (num int64, err error, ops []Roles) {
 	o := orm.NewOrm()
 	qb, _ := orm.NewQueryBuilder("mysql")
 	qb.Select("*").

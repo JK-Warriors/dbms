@@ -3,5 +3,5 @@ mysql:
       Port: 3306
       Username: root
       Password: root
-      Dbname: aiopms
+      Dbname: dbms
       Timeout: 3

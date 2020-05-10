@@ -1,10 +1,11 @@
 package messages
 
 import (
+	"dbms/controllers"
+	. "dbms/models/messages"
 	"fmt"
-	"opms/controllers"
-	. "opms/models/messages"
-	//"opms/utils"
+
+	//"dbms/utils"
 	//"strconv"
 	"strings"
 	//"time"

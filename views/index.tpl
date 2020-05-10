@@ -22,11 +22,10 @@
     <div class="wrapper">
       <div class="row">
         <div class="jumbotron text-center" style="background-color:transparent;">
-          <h2>让项目管理与OA办公更加轻便！</h2>
+          <h2>让数据库管理更加轻便！</h2>
 		<br/><br/>
-			<a style="font-size:38px;" href="/user/show/{{.LoginUserid}}">开启OPMS之旅</a>
+			<a style="font-size:38px;" href="/">开启DBMS之旅</a>
 			<br/><br/>
-			<a href="http://opms.milu365.cn" target="_blank">OPMS官网</a> &middot; <a href="http://opms.docs.milu365.cn" target="_blank">OPMS手册</a> &middot; <a href="http://opms.milu365.cn/update.html" target="_blank">版本更新</a>
 			
         </div>
       </div>

@@ -1,24 +1,24 @@
 package roles
 
 import (
+	"dbms/models"
+	"dbms/utils"
 	"fmt"
-	"opms/models"
-	"opms/utils"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 )
 
 type Permissions struct {
-	Id         int64 		`orm:"pk;column(id);"`
-	Parentid   int64		`orm:"column(parent_id)"`
-	Name       string		`orm:"column(name)"`
-	EName       string		`orm:"column(ename)"`
-	Url        string		`orm:"column(url)"`
-	Icon       string		`orm:"column(icon)"`
-	Nav        int			`orm:"column(is_nav)"`
-	IsShow     int			`orm:"column(is_show)"`
-	Sort       int			`orm:"column(sort)"`
+	Id       int64  `orm:"pk;column(id);"`
+	Parentid int64  `orm:"column(parent_id)"`
+	Name     string `orm:"column(name)"`
+	EName    string `orm:"column(ename)"`
+	Url      string `orm:"column(url)"`
+	Icon     string `orm:"column(icon)"`
+	Nav      int    `orm:"column(is_nav)"`
+	IsShow   int    `orm:"column(is_show)"`
+	Sort     int    `orm:"column(sort)"`
 }
 
 func (this *Permissions) TableName() string {

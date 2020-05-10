@@ -2,11 +2,10 @@ package initial
 
 import (
 	//"fmt"
-	"opms/models/business"
-	"opms/models/dbconfig"
-	"opms/models/roles"
-	"opms/models/users"
-	"opms/utils"
+	"dbms/models/dbconfig"
+	"dbms/models/roles"
+	"dbms/models/users"
+	"dbms/utils"
 
 	//"time"
 
@@ -19,7 +18,6 @@ func InitTemplate() {
 	beego.AddFuncMap("getPermissionname", roles.GetPermissiontName)
 
 	beego.AddFuncMap("getDBtype", dbconfig.GetDBtype)
-	beego.AddFuncMap("getBsName", business.GetBusinessName)
 	/*
 		beego.AddFuncMap("getNeedsname", projects.GetProjectNeedsName)
 		beego.AddFuncMap("getProjectname", projects.GetProjectName)

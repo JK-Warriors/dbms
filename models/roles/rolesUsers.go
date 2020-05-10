@@ -1,25 +1,25 @@
 package roles
 
 import (
+	"dbms/models"
+	"dbms/utils"
 	"fmt"
-	"opms/models"
-	"opms/utils"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 )
 
 type RolesUser struct {
-	Id      int64	`orm:"pk;auto"`
-	Roleid  int64	`orm:"column(role_id)"`
-	Userid  int64	`orm:"column(user_id)"`
+	Id     int64 `orm:"pk;auto"`
+	Roleid int64 `orm:"column(role_id)"`
+	Userid int64 `orm:"column(user_id)"`
 }
 
 type RolesUserName struct {
 	Id       int64
 	Userid   int64
 	Realname string
-	Roleid  int64
+	Roleid   int64
 }
 
 func (this *RolesUser) TableName() string {
@@ -100,10 +100,9 @@ func ListRolesUser(roleid int64, page, offset int) (ops []RolesUser) {
 	return users
 }
 
-
 func GetRoleIdByUserId(userid int64) (err error, roleUser RolesUser) {
 	o := orm.NewOrm()
-	
+
 	qs := o.QueryTable(models.TableName("role_user"))
 	cond := orm.NewCondition()
 	cond = cond.And("user_id", userid)

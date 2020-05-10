@@ -2,8 +2,8 @@ package logs
 
 import (
 	//"fmt"
-	"opms/models"
-	//"opms/utils"
+	"dbms/models"
+	//"dbms/utils"
 	"time"
 
 	"github.com/astaxie/beego"
@@ -11,15 +11,15 @@ import (
 )
 
 type Logs struct {
-	Id           int64 		`orm:"pk;column(id);"`
-	Userid       int64		`orm:"column(user_id);"`
-	Username     string
-	Url          string
-	Title        string
-	Content      string
-	Ip           string
-	Useragent    string
-	Created      int64
+	Id        int64 `orm:"pk;column(id);"`
+	Userid    int64 `orm:"column(user_id);"`
+	Username  string
+	Url       string
+	Title     string
+	Content   string
+	Ip        string
+	Useragent string
+	Created   int64
 }
 
 func (this *Logs) TableName() string {
@@ -41,7 +41,7 @@ func AddLogs(upd Logs) error {
 	log.Title = upd.Title
 	log.Content = upd.Content
 	log.Ip = upd.Ip
-	log.Useragent =upd.Useragent
+	log.Useragent = upd.Useragent
 	log.Created = time.Now().Unix()
 	_, err := o.Insert(log)
 	return err
@@ -89,7 +89,6 @@ func CountLogs(condArr map[string]string) int64 {
 	num, _ := qs.SetCond(cond).Count()
 	return num
 }
-
 
 func DeleteLogs(ids string) error {
 	o := orm.NewOrm()

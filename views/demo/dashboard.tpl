@@ -56,7 +56,7 @@
           <div class="time2">
             最新检测时间：&nbsp;<span>2020-02-27 13:07:59</span>
           </div>
-          <h1><a href="#">DRM监控平台</a></h1>
+          <h1><a href="#">DBMS监控平台</a></h1>
         </div>
         <div class="datanum">
           <!-- <div class="dtit">数据库的连接状态</div> -->

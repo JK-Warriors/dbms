@@ -1,9 +1,9 @@
 package roles
 
 import (
+	"dbms/models"
+	"dbms/utils"
 	"fmt"
-	"opms/models"
-	"opms/utils"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"

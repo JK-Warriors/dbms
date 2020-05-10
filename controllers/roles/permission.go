@@ -1,12 +1,13 @@
 package roles
 
 import (
+	"dbms/controllers"
+	"dbms/models/roles"
+	"dbms/utils"
 	"fmt"
-	"opms/controllers"
-	"opms/utils"
-	"opms/models/roles"
 	"strconv"
 	"strings"
+
 	//"time"
 
 	"github.com/astaxie/beego"
@@ -55,7 +56,7 @@ func (this *ManagePermissionController) Get() {
 	this.Data["permissions"] = permissions
 	this.Data["countPermission"] = countPermission
 	//utils.LogDebug("countPermission" + string(countPermission))
-	
+
 	//一级栏目
 	condArrP := make(map[string]string)
 	condArrP["parentid"] = "0"

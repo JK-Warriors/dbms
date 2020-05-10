@@ -1,9 +1,9 @@
 package test
 
 import (
+	_ "dbms/routers"
 	"net/http"
 	"net/http/httptest"
-	_ "opms/routers"
 	"path/filepath"
 	"runtime"
 	"testing"

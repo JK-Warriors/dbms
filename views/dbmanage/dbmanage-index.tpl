@@ -51,9 +51,6 @@
                     <a href="/config/db/manage" class="btn btn-default" type="submit"> <i class="fa fa-reset"></i> 重置 </a>
                   </form>
                 </div>
-                <div class="pull-right">
-                  <a href="/config/db/add" class="btn btn-success" id="add_business"><i class="fa fa-plus"></i> 新增数据库</a>
-                </div>
               </div>
             </div>
           </div>

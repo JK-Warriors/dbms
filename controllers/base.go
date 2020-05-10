@@ -1,13 +1,13 @@
 package controllers
 
 import (
-	//"opms/initial"
+	//"dbms/initial"
 
+	. "dbms/models/messages"
+	. "dbms/models/roles"
 	"fmt"
-	. "opms/models/messages"
-	. "opms/models/roles"
 
-	//"opms/utils"
+	//"dbms/utils"
 	"strconv"
 	"strings"
 

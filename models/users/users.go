@@ -1,15 +1,15 @@
 package users
 
 import (
+	crypt_rand "crypto/rand"
+	"dbms/models"
+	"dbms/utils"
+	"encoding/base64"
 	"fmt"
-	"strings"
+	"io"
 	"math/rand"
-	"opms/models"
-	"opms/utils"
+	"strings"
 	"time"
-    "encoding/base64"
-    crypt_rand "crypto/rand"
-    "io"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
@@ -76,7 +76,6 @@ func LoginUser(username, password string) (err error, user Users) {
 	return err, users
 }
 
-
 //得到用户信息
 func GetUser(id int64) (Users, error) {
 	var user Users
@@ -142,7 +141,6 @@ func GetAvatarUserid(id int64) string {
 	}
 	return avatar
 }
-
 
 //得到用户详情信息
 func GetProfile(id int64) (UsersProfile, error) {
@@ -279,7 +277,6 @@ func AddUserProfile(updUser Users, updPro UsersProfile) (int64, error) {
 	return id, err
 }
 
-
 //用户列表
 func ListUser(condArr map[string]string, page int, offset int) (num int64, err error, user []Users) {
 	o := orm.NewOrm()
@@ -388,33 +385,32 @@ func DeleteUsers(ids string) error {
 //重置用户密码
 func ResetUserPassword(id string) (error, string) {
 	var newPasswd string
-    b := make([]byte, 8)
-    //ReadFull从rand.Reader精确地读取len(b)字节数据填充进b
-    //rand.Reader是一个全局、共享的密码用强随机数生成器
-    if _, err := io.ReadFull(crypt_rand.Reader, b); err != nil { 
-        newPasswd = "123456"
-	}else{
+	b := make([]byte, 8)
+	//ReadFull从rand.Reader精确地读取len(b)字节数据填充进b
+	//rand.Reader是一个全局、共享的密码用强随机数生成器
+	if _, err := io.ReadFull(crypt_rand.Reader, b); err != nil {
+		newPasswd = "123456"
+	} else {
 		//fmt.Println(b) //[62 186 123 16 209 19 130 218]
 		newPasswd = base64.URLEncoding.EncodeToString(b)
 	}
 
 	pwdmd5 := utils.Md5(newPasswd)
-	
+
 	o := orm.NewOrm()
 	_, err := o.Raw("UPDATE pms_users SET password = ? WHERE userid = ?", pwdmd5, id).Exec()
 	return err, newPasswd
 }
 
-
 type UsersPermissionsAll struct {
 	Permission string
-	Roleid    string
+	Roleid     string
 }
 
 func GetPermissionsAll(id int64) (UsersPermissionsAll, error) {
 	var pers []UsersPermissionsAll
 	var err error
-	
+
 	sql := `select p.ename as permission, ru.role_id as roleid 
 			from pms_role_user ru, pms_role_permission rp, pms_permissions p
 			where rp.role_id = ru.role_id 
@@ -433,15 +429,13 @@ func GetPermissionsAll(id int64) (UsersPermissionsAll, error) {
 	roleidstrings := strings.Split(strings.Trim(roleidstring, ","), ",")
 	roleMap := utils.RemoveDuplicatesAndEmpty(roleidstrings)
 	roleidstring = ""
-	
+
 	for _, v := range roleMap {
 		roleidstring += v + ","
 	}
 	var per UsersPermissionsAll
 	per.Permission = strings.Trim(permissionstring, ",")
 	per.Roleid = strings.Trim(roleidstring, ",")
-	
+
 	return per, err
 }
-
-

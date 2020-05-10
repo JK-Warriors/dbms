@@ -9,7 +9,7 @@
       <div class="media logged-user"> <img alt="{{.LoginUsername}}" src="{{getAvatar .LoginAvatar}}" class="media-object">
         <div class="media-body">
           <h4><a href="/user/show/{{.LoginUserid}}">{{.LoginUsername}}</a></h4>
-          <span>OPMS系统</span> </div>
+          <span>DBMS系统</span> </div>
       </div>
       <h5 class="left-nav-title">控制台</h5>
       <ul class="nav nav-pills nav-stacked custom-nav">
@@ -22,8 +22,8 @@
 
  <!-- new left-menu -->
  <div class="navbar-default sidebar navbarstyle" role="navigation">
-  <div class="logo"> <a href="/"><img src="/static/img/logo-left.png" alt="DRM管理系统">DRM管理系统</a>  </div>
-  <div class="logo-icon text-center"> <a href="/"><img src="/static/img/logo_icon.png" style="width:40px;" alt="DRM">DRM</a> </div>
+  <div class="logo"> <a href="/"><img src="/static/img/logo-left.png" alt="DBMS管理系统">DBMS管理系统</a>  </div>
+  <div class="logo-icon text-center"> <a href="/"><img src="/static/img/logo_icon.png" style="width:40px;" alt="DBMS">DBMS</a> </div>
   
   <!--<ul class="nav nav-pills nav-stacked custom-nav js-left-nav">-->
   <div class="sidebar-nav navbar-collapse">

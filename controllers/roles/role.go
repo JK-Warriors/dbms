@@ -1,12 +1,13 @@
 package roles
 
 import (
+	"dbms/controllers"
+	"dbms/models/roles"
+	"dbms/utils"
 	"fmt"
-	"opms/controllers"
-	"opms/utils"
-	"opms/models/roles"
 	"strconv"
 	"strings"
+
 	//"time"
 
 	"github.com/astaxie/beego"

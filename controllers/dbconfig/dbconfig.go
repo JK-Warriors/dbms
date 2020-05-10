@@ -2,11 +2,11 @@ package dbconfig
 
 import (
 	"database/sql"
+	"dbms/controllers"
+	. "dbms/models/dbconfig"
+	. "dbms/models/group"
+	"dbms/utils"
 	"fmt"
-	"opms/controllers"
-	. "opms/models/business"
-	. "opms/models/dbconfig"
-	"opms/utils"
 	"strconv"
 	"strings"
 
@@ -72,8 +72,8 @@ func (this *AddDBConfigController) Get() {
 	var dbconf Dbconfigs
 	this.Data["dbconf"] = dbconf
 
-	bsconf := ListAllBusiness()
-	this.Data["bsconf"] = bsconf
+	gpconf := ListAllGroup()
+	this.Data["gpconf"] = gpconf
 
 	this.TplName = "dbconfig/dbconfig-form.tpl"
 }
@@ -86,7 +86,7 @@ func (this *AddDBConfigController) Post() {
 		return
 	}
 
-	bs_id, _ := this.GetInt("bs_id")
+	group_id, _ := this.GetInt("group_id")
 
 	db_type, _ := this.GetInt("db_type")
 	if db_type <= 0 {
@@ -124,11 +124,6 @@ func (this *AddDBConfigController) Post() {
 	}
 
 	role, _ := this.GetInt("role")
-	if role <= 0 {
-		this.Data["json"] = map[string]interface{}{"code": 0, "message": "请选择角色"}
-		this.ServeJSON()
-		return
-	}
 
 	var dbconf Dbconfigs
 
@@ -140,7 +135,7 @@ func (this *AddDBConfigController) Post() {
 	dbconf.Dbname = this.GetString("db_name")
 	dbconf.Username = username
 	dbconf.Password = password
-	dbconf.Bs_Id = bs_id
+	dbconf.GroupId = group_id
 	dbconf.Role = role
 
 	err := AddDBconfig(dbconf)
@@ -171,8 +166,8 @@ func (this *EditDBConfigController) Get() {
 	}
 	this.Data["dbconf"] = dbconf
 
-	bsconf := ListAllBusiness()
-	this.Data["bsconf"] = bsconf
+	gpconf := ListAllGroup()
+	this.Data["gpconf"] = gpconf
 
 	this.TplName = "dbconfig/dbconfig-form.tpl"
 }
@@ -227,14 +222,9 @@ func (this *EditDBConfigController) Post() {
 		return
 	}
 
-	bs_id, _ := this.GetInt("bs_id")
+	group_id, _ := this.GetInt("group_id")
 
 	role, _ := this.GetInt("role")
-	if role <= 0 {
-		this.Data["json"] = map[string]interface{}{"code": 0, "message": "请选择角色"}
-		this.ServeJSON()
-		return
-	}
 
 	var dbconf Dbconfigs
 
@@ -246,7 +236,7 @@ func (this *EditDBConfigController) Post() {
 	dbconf.Dbname = this.GetString("db_name")
 	dbconf.Username = username
 	dbconf.Password = password
-	dbconf.Bs_Id = bs_id
+	dbconf.GroupId = group_id
 	dbconf.Role = role
 
 	err := UpdateDBconfig(id, dbconf)
@@ -361,22 +351,23 @@ func CheckOracleConnect(host string, port string, inst_name string, username str
 	//db, err := sql.Open("oci8", "sys/oracle@192.168.133.40:1521/orcl?as=sysdba")
 	db, err := sql.Open("oci8", con_str)
 	defer db.Close()
-
+	//utils.LogDebug(con_str)
 	_, err = db.Query("select 1 from dual")
 
-	//err_str := fmt.Sprintf("%s", err)
-
+	//utils.LogDebug(err)
 	//ORA-28009: connection as SYS should be as SYSDBA or SYSOPER
-	if strings.Contains(err.Error(), "ORA-28009") || strings.Contains(err.Error(), "driver: bad connection") {
-		con_str = username + "/" + password + "@" + host + ":" + port + "/" + inst_name + "?as=sysdba&timeout=5s&readTimeout=6s"
-		db, err = sql.Open("oci8", con_str)
-		defer db.Close()
-
-		_, err = db.Query("select 1 from dual")
-	}
-
 	if err != nil {
-		utils.LogDebug("Open Connection failed: " + err.Error())
+		if strings.Contains(err.Error(), "ORA-28009") || strings.Contains(err.Error(), "driver: bad connection") {
+			con_str = username + "/" + password + "@" + host + ":" + port + "/" + inst_name + "?as=sysdba&timeout=5s&readTimeout=6s"
+			db, err = sql.Open("oci8", con_str)
+			defer db.Close()
+
+			_, err = db.Query("select 1 from dual")
+
+			if err != nil {
+				utils.LogDebug("Open Connection failed: " + err.Error())
+			}
+		}
 	}
 
 	return err

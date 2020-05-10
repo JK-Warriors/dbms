@@ -2,8 +2,8 @@ package messages
 
 import (
 	//"fmt"
-	"opms/models"
-	//"opms/utils"
+	"dbms/models"
+	//"dbms/utils"
 	"time"
 
 	"github.com/astaxie/beego"

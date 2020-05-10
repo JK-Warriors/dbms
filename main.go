@@ -1,10 +1,10 @@
 package main
 
 import (
+	_ "dbms/initial"
+	_ "dbms/routers"
 	"html/template"
 	"net/http"
-	_ "opms/initial"
-	_ "opms/routers"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/context"

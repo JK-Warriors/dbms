@@ -2,8 +2,9 @@ package dbconfig
 
 import (
 	//"fmt"
-	"opms/models"
-	//"opms/utils"
+	"dbms/models"
+
+	//"dbms/utils"
 	"time"
 
 	"github.com/astaxie/beego"
@@ -20,7 +21,7 @@ type Dbconfigs struct {
 	Dbname       string `orm:"column(db_name);"`
 	Username     string `orm:"column(username);"`
 	Password     string `orm:"column(password);"`
-	Bs_Id        int    `orm:"column(bs_id);"`
+	GroupId      int    `orm:"column(group_id);"`
 	Role         int    `orm:"column(role);"`
 	Status       int    `orm:"column(status);"`
 	IsDelete     int    `orm:"column(is_delete);"`
@@ -50,7 +51,7 @@ func AddDBconfig(upd Dbconfigs) error {
 	dbconf.Dbname = upd.Dbname
 	dbconf.Username = upd.Username
 	dbconf.Password = upd.Password
-	dbconf.Bs_Id = upd.Bs_Id
+	dbconf.GroupId = upd.GroupId
 	dbconf.Role = upd.Role
 	dbconf.Status = 1
 	dbconf.IsDelete = 0
@@ -63,21 +64,22 @@ func AddDBconfig(upd Dbconfigs) error {
 func UpdateDBconfig(id int, upd Dbconfigs) error {
 	var dbconf Dbconfigs
 	o := orm.NewOrm()
-	dbconf = Dbconfigs{Id: id}
+	dbconf, err := GetDBconfig(id)
+	if err == nil {
+		dbconf.Dbtype = upd.Dbtype
+		dbconf.Host = upd.Host
+		dbconf.Port = upd.Port
+		dbconf.Alias = upd.Alias
+		dbconf.InstanceName = upd.InstanceName
+		dbconf.Dbname = upd.Dbname
+		dbconf.Username = upd.Username
+		dbconf.Password = upd.Password
+		dbconf.GroupId = upd.GroupId
+		dbconf.Role = upd.Role
+		dbconf.Updated = time.Now().Unix()
 
-	dbconf.Dbtype = upd.Dbtype
-	dbconf.Host = upd.Host
-	dbconf.Port = upd.Port
-	dbconf.Alias = upd.Alias
-	dbconf.InstanceName = upd.InstanceName
-	dbconf.Dbname = upd.Dbname
-	dbconf.Username = upd.Username
-	dbconf.Password = upd.Password
-	dbconf.Bs_Id = upd.Bs_Id
-	dbconf.Role = upd.Role
-	dbconf.Updated = time.Now().Unix()
-
-	_, err := o.Update(&dbconf)
+		_, err = o.Update(&dbconf)
+	}
 	return err
 }
 

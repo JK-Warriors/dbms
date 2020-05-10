@@ -2,11 +2,11 @@ package demo
 
 import (
 	//"fmt"
-	//"opms/utils"
+	//"dbms/utils"
 	//"strconv"
 	//"strings"
 	//"time"
-	"opms/controllers"
+	"dbms/controllers"
 )
 
 //消息管理
@@ -27,6 +27,7 @@ func (this *DemoController) Get() {
 type FormController struct {
 	controllers.BaseController
 }
+
 func (this *FormController) Get() {
 	//权限检测
 	// if !strings.Contains(this.GetSession("userPermission").(string), "dbconfig-manage") {
@@ -39,6 +40,7 @@ func (this *FormController) Get() {
 type BaseController struct {
 	controllers.BaseController
 }
+
 func (this *BaseController) Get() {
 	//权限检测
 	// if !strings.Contains(this.GetSession("userPermission").(string), "dbconfig-manage") {
@@ -51,6 +53,7 @@ func (this *BaseController) Get() {
 type DashboardController struct {
 	controllers.BaseController
 }
+
 func (this *DashboardController) Get() {
 	//权限检测
 	// if !strings.Contains(this.GetSession("userPermission").(string), "dbconfig-manage") {
@@ -63,6 +66,7 @@ func (this *DashboardController) Get() {
 type DgscreenController struct {
 	controllers.BaseController
 }
+
 func (this *DgscreenController) Get() {
 	//权限检测
 	// if !strings.Contains(this.GetSession("userPermission").(string), "dbconfig-manage") {
