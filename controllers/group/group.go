@@ -3,7 +3,6 @@ package group
 import (
 	"dbms/controllers"
 	. "dbms/models/group"
-	"dbms/utils"
 	"fmt"
 	"strconv"
 	"strings"
@@ -18,7 +17,6 @@ type ManageGroupController struct {
 }
 
 func (this *ManageGroupController) Get() {
-	utils.LogDebug("config-group-manage")
 	//权限检测
 	if !strings.Contains(this.GetSession("userPermission").(string), "config-group-manage") {
 		this.Abort("401")

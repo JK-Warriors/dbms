@@ -71,7 +71,6 @@
                         <th>数据库IP</th>
                         <th>端口</th>
                         <th>别名</th>
-                        <th>角色</th>
                         <th>实例名</th>
                         <th>数据库名</th>
                         <th>用户名</th>
@@ -87,24 +86,12 @@
                       <td>{{$v.Host}}</td>
                       <td>{{$v.Port}}</a></td>
                       <td>{{$v.Alias}}</a></td>
-                      <td>{{if eq 1 $v.Role}}主{{else}}备{{end}}</td>
                       <td>{{$v.InstanceName}}</td>
                       <td>{{$v.Dbname}}</td>
                       <td>{{$v.Username}}</td>
                       <td>{{if eq 1 $v.Status}}激活{{else}}禁用{{end}}</td>
                       <td><div class="btn-group">
-                          <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 操作<span class="caret"></span> </button>
-                          <ul class="dropdown-menu">
-                            <li><a href="/config/db/edit/{{$v.Id}}">编辑</a></li>
-                            <li role="separator" class="divider"></li>
-                            {{if eq 1 $v.Status}}
-                            <li><a href="javascript:;" class="js-dbconfig-single" data-id="{{$v.Id}}" data-status="2">禁用</a></li>
-                            {{else}}
-                            <li><a href="javascript:;" class="js-dbconfig-single" data-id="{{$v.Id}}" data-status="1">激活</a></li>
-                            {{end}}
-                            <li role="separator" class="divider"></li>
-                            <li><a href="javascript:;" class="js-dbconfig-delete" data-op="delete" data-id="{{$v.Id}}">删除</a></li>
-                          </ul>
+                          <button type="button" class="btn btn-primary">巡检</button>
                         </div></td>
                     </tr>
                     {{end}}
@@ -129,42 +116,6 @@
 
 {{template "inc/foot.tpl" .}}
 <script>
-    $('.js-dbconfig-single').on('click', function(){
-    	var that = $(this);
-    	var status = that.attr('data-status')
-    	var id = that.attr('data-id');
-      $.post('/config/db/ajax/status', { status: status, id: id },function(data){
-        dialogInfo(data.message)
-        if (data.code) {
-          that.attr('data-status', status == 2 ? 1 : 2).text(status == 2 ? '激活' : '禁用').parents('td').prev('td').text(status == 2 ? '禁用' : '激活');
-        } else {
-          
-        }
-        setTimeout(function(){ $('#dialogInfo').modal('hide'); }, 1000);
-      },'json');
-    }); 
-	
-	$('.js-dbconfig-delete').on('click', function(){
-		var that = $(this);
-		var id = that.attr('data-id');
-
-		layer.confirm('您确定要删除吗？', {
-			btn: ['确定','取消'] //按钮
-			,title:"提示"
-		}, function(index){
-			layer.close(index);
-			
-			$.post('/config/db/ajax/delete', {ids:id},function(data){
-				dialogInfo(data.message)
-				if (data.code) {
-					setTimeout(function(){ window.location.reload() }, 1000);
-				} else {
-					setTimeout(function(){ $('#dialogInfo').modal('hide'); }, 1000);
-				}
-			},'json');
-		});
-		
-	});
 
 </script>
 </body>

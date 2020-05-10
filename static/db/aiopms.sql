@@ -100,6 +100,9 @@ INSERT INTO `pms_permissions` VALUES ('1112', '2', '编辑数据库', 'config-db
 INSERT INTO `pms_permissions` VALUES ('1113', '2', '删除数据库', 'config-db-delete', '/config/db/delete', '', '0', '0', '0');
 
 INSERT INTO `pms_permissions` VALUES ('1120', '2', '节点配置', 'config-node-manage', '/config/node/manage', '', '1', '1', '3');
+INSERT INTO `pms_permissions` VALUES ('1121', '2', '添加节点', 'config-node-add', '/config/node/add', '', '0', '0', '0');
+INSERT INTO `pms_permissions` VALUES ('1122', '2', '编辑节点', 'config-node-edit', '/config/node/edit', '', '0', '0', '0');
+INSERT INTO `pms_permissions` VALUES ('1123', '2', '删除节点', 'config-node-delete', '/config/node/delete', '', '0', '0', '0');
 
 INSERT INTO `pms_permissions` VALUES ('1130', '3', '数据库巡检', 'mt-healthcheck-manage', '/maintenance/healthcheck/manage', '', '1', '1', '1');
 -- ----------------------------
@@ -151,12 +154,15 @@ INSERT INTO `pms_role_permission` VALUES ('30', '1', '1111');
 INSERT INTO `pms_role_permission` VALUES ('31', '1', '1112');
 INSERT INTO `pms_role_permission` VALUES ('32', '1', '1113');
 INSERT INTO `pms_role_permission` VALUES ('33', '1', '1120');
+INSERT INTO `pms_role_permission` VALUES ('34', '1', '1121');
+INSERT INTO `pms_role_permission` VALUES ('35', '1', '1122');
+INSERT INTO `pms_role_permission` VALUES ('36', '1', '1123');
 
-INSERT INTO `pms_role_permission` VALUES ('34', '1', '1130');
-INSERT INTO `pms_role_permission` VALUES ('35', '1', '1131');
-INSERT INTO `pms_role_permission` VALUES ('36', '1', '1132');
-INSERT INTO `pms_role_permission` VALUES ('37', '1', '1133');
-INSERT INTO `pms_role_permission` VALUES ('38', '1', '1134');
+INSERT INTO `pms_role_permission` VALUES ('37', '1', '1130');
+INSERT INTO `pms_role_permission` VALUES ('38', '1', '1131');
+INSERT INTO `pms_role_permission` VALUES ('39', '1', '1132');
+INSERT INTO `pms_role_permission` VALUES ('40', '1', '1133');
+INSERT INTO `pms_role_permission` VALUES ('41', '1', '1134');
 
 
 
@@ -299,6 +305,31 @@ CREATE TABLE `pms_db_config` (
   KEY `host` (`host`),
   KEY `alias` (`alias`)
 )ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8 COMMENT='数据库配置表';
+
+
+-- -----------------------------------------------------------------------------
+-- Table structure for pms_node_config
+-- -----------------------------------------------------------------------------
+DROP TABLE IF EXISTS `pms_node_config`;
+CREATE TABLE `pms_node_config` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `os_type` tinyint(2) DEFAULT NULL,
+  `os_version` varchar(50) DEFAULT NULL,
+  `host` varchar(30) NOT NULL DEFAULT '' COMMENT '节点IP',
+  `protocol` varchar(30) NOT NULL DEFAULT '' COMMENT '协议',
+  `port` int(10) NOT NULL DEFAULT 0 COMMENT '节点端口',
+  `nodename` varchar(255) DEFAULT '' COMMENT '主机名',
+  `username` varchar(30) DEFAULT '' COMMENT '用户名',
+  `password` varchar(255) DEFAULT '' COMMENT '密码',
+  `db_id` int(10) DEFAULT NULL COMMENT '数据库ID',
+  `status` tinyint(2) DEFAULT 1 COMMENT '1: 激活；0：禁用',
+  `is_delete` tinyint(2) DEFAULT 0 COMMENT '1: 删除；0：未删除',
+  `created` int(10) DEFAULT NULL COMMENT '操作时间',
+  `updated` int(10) DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  KEY `host` (`host`),
+  KEY `nodename` (`nodename`)
+)ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8 COMMENT='节点配置表';
 
 
 -- -----------------------------------------------------------------------------

@@ -3,6 +3,7 @@ package routers
 import (
 	"dbms/controllers/dbconfig"
 	"dbms/controllers/dbmanage"
+	"dbms/controllers/dbnode"
 	"dbms/controllers/demo"
 	"dbms/controllers/group"
 	"dbms/controllers/logs"
@@ -75,6 +76,13 @@ func init() {
 	beego.Router("/config/db/ajax/status", &dbconfig.AjaxStatusDBConfigController{})
 	beego.Router("/config/db/ajax/delete", &dbconfig.AjaxDeleteDBConfigController{})
 	beego.Router("/config/db/ajax/connect", &dbconfig.AjaxConnectDBConfigController{})
+
+	//节点配置
+	beego.Router("/config/node/manage", &dbnode.ManageNodeConfigController{})
+	beego.Router("/config/node/add", &dbnode.AddNodeConfigController{})
+	beego.Router("/config/node/edit/:id", &dbnode.EditNodeConfigController{})
+	beego.Router("/config/node/ajax/status", &dbnode.AjaxStatusNodeConfigController{})
+	beego.Router("/config/node/ajax/delete", &dbnode.AjaxDeleteNodeConfigController{})
 
 	//数据库管理
 	beego.Router("/maintenance/healthcheck/manage", &dbmanage.ManageHealthCheckController{})
